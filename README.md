@@ -16,7 +16,7 @@
 | Student Name | Student Email | GitHub Username |
 |    :---:     |     :---:     |     :---:       |
 | Thomas Abadines      |  tabadines@mail.sfsu.edu    |  tabadines00 |
-| Vito Gano  | vgano1@mail.sfsu.edu |                 |
+| Vito Gano  | vgano1@mail.sfsu.edu |  vgano1   |
 | Souhib Trabelsi | strabelsi@mail.sfsu.edu |                 |
 | Junhao Zhai | jzhai@mail.sfsu.edu |                 |
 | Trung-Duong Pham-Vu | tphamvu@mail.sfsu.edu |                 |
