@@ -20,6 +20,5 @@
 | Souhib Trabelsi | strabelsi@mail.sfsu.edu |                 |
 | Junhao Zhai | jzhai@mail.sfsu.edu |                 |
 | Trung-Duong Pham-Vu | tphamvu@mail.sfsu.edu |                 |
-| Onkar Singh | osingh@mail.sfsu.edu |                 |
 
 ## NO code needs to be stored in the root of your repository. You may rename the application folder if you like to your team's application name. But all source code related to your team's application should be stored inside the application folder.
