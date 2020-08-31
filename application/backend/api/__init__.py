@@ -1,9 +1,10 @@
 from flask import Flask
+from flask_restful import Api
 from api.config import Config
-
-def create_app():
+from api.routes import initialize_routes
+def create_api():
     """
-    create_app
+    create_api
 
     Create the flask app with every config needed for the website
 
@@ -11,9 +12,8 @@ def create_app():
     :rtype: Flask App
     """
     app = Flask(__name__)
+    api = Api(app)
     app.config.from_object(Config)
-
-    from api.main.routes import main
-    app.register_blueprint(main)
+    initialize_routes(api)
     
     return app
