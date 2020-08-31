@@ -3,6 +3,7 @@ from setuptools import setup, find_packages
 REQUIREMENTS = [
     # Put requirements here
     'flask==1.1.2',
+    'Flask-RESTful==0.3.8',
 ]
 
 TEST_REQUIREMENTS = [
