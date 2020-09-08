@@ -1,12 +1,12 @@
 body{
-    background-color: #263244;
+    background-image: url("../img/background.jpg");
     color: #dde1e2;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: "Goudy Bookletter 1911", sans-serif;
 }
 h1{
-    width: 400px;
-    background-color: #263244;
-    color: #dde1e2;
+    width: 500px;
+    background-color: #FF00FF;
+    color: #C0C0C0;
     margin: auto;
     margin-top: 1px;
     margin-bottom: 20px;
@@ -19,7 +19,8 @@ img{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    
+    width: 60%;
+    height:60%;
 }
 p{
     text-align: left;
@@ -30,11 +31,12 @@ p{
 }
 .bottom-box{
     background-color: #344155;
-    width: 50%;
+    width: 70%;
     font-size: 15px;
     margin: inherit;
     line-height: 30px;
     padding: 10px;
+    margin-top: 50px;
 }
 .navbar {
     background-color: #fada5e;
