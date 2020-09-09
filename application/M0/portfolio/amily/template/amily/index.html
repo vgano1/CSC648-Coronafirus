@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Amily</title>
-    <link rel="stylesheet" href="css/styles.css" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('amily.static', filename='css/styles.css') }}" type="text/css">
 
 </head>
 <body>
@@ -14,7 +14,7 @@
     <div class = "center">
         <h1>About Me - Amily Wu</h1>
         <br>
-        <img src="img/profile.jpg">
+        <img src="{{ url_for('amily.static', filename='img/profile.jpg') }}">
         <br>
         <div class="bottom-box">
             <p>

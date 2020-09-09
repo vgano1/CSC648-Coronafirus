@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="{{ url_for('souhib.static', filename='css/styles.css') }}">
 
         <!-- =====BOX ICONS===== -->
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="home__img">
-                    <img src="img/perfil.png" alt="">
+                    <img src="{{ url_for('souhib.static', filename='img/perfil.png') }}" alt="">
                 </div>
             </section>
 
@@ -58,7 +58,7 @@
 
                 <div class="about__container bd-grid">
                     <div class="about__img">
-                        <img src="img/about.jpg" alt="">
+                        <img src="{{ url_for('souhib.static', filename='img/about.jpg') }}" alt="">
                     </div>
                     
                     <div>
@@ -130,7 +130,7 @@
                     </div>
                     
                     <div>
-                        <img src="img/work3.jpg" alt="" class="skills__img">
+                        <img src="{{ url_for('souhib.static', filename='img/work3.jpg') }}" alt="" class="skills__img">
                     </div>
                 </div>
             </section>
@@ -182,6 +182,6 @@
         <script src="https://unpkg.com/scrollreveal"></script>
 
         <!--===== MAIN JS =====-->
-        <script src="js/main.js"></script>
+        <script src="{{ url_for('souhib.static', filename='js/main.js') }}"></script>
     </body>
 </html>

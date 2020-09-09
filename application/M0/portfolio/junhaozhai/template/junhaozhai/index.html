@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Junhao Zhai Protfolio</title>
-    <link rel="stylesheet" href="css/styles.css" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('junhaozhai.static', filename='css/styles.css') }}" type="text/css">
 
 </head>
 <body>
@@ -14,7 +14,7 @@
     <div class = "center">
         <h1>Junhao Zhai</h1>
         <br>
-        <img src="img/profile.jpg">
+        <img src="{{ url_for('junhaozhai.static', filename='img/profile.jpg') }}">
         <br>
         <div class="bottom-box">
             <p>
