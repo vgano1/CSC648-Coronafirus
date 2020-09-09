@@ -5,7 +5,7 @@ from portfolio.amily.routes import amily
 from portfolio.junhaozhai.routes import junhaozhai
 from portfolio.kaimi.routes import kaimi
 from portfolio.thomas.routes import thomas
-
+from portfolio.vito.routes import vito
 
 def create_app():
     """
@@ -24,5 +24,6 @@ def create_app():
     app.register_blueprint(souhib, url_prefix='/souhib')
     app.register_blueprint(junhaozhai, url_prefix='/junhaozhai')
     app.register_blueprint(thomas, url_prefix='/thomas')
-    
+    app.register_blueprint(vito, url_prefix='/vito')
+
     return app
