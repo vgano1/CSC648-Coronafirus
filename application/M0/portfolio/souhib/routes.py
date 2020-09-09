@@ -1,5 +1,4 @@
 from flask import render_template, request, Blueprint
-print(__name__)
 
 souhib = Blueprint('souhib', __name__, static_folder='static', template_folder='template')
 
