@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Api
 from api.config import Config
 from api.routes import initialize_routes
+
 def create_api():
     """
     create_api
@@ -15,5 +16,5 @@ def create_api():
     api = Api(app)
     app.config.from_object(Config)
     initialize_routes(api)
-    
+
     return app
