@@ -5,10 +5,6 @@ import os
 from pathlib import Path
 from api import db
 
-
-basedir = Path(os.path.abspath(os.path.dirname(__file__))).parent
-data_file = os.path.join(basedir, 'static\\mapdataall.csv')
-
 class FireList(Resource):
     def get(self):
         cur = db.connection.cursor()

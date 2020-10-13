@@ -6,9 +6,6 @@ from flask_restful import Resource
 from api import db
 import json
 
-basedir = Path(os.path.abspath(os.path.dirname(__file__))).parent
-data_file = os.path.join(basedir, 'static\\10-11-2020.csv')
-
 class Covid(Resource):
     def get(self):
         cur = db.connection.cursor() # create a cursor
