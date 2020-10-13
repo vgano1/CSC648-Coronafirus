@@ -16,7 +16,7 @@ def create_api():
     :return: Flask Application
     :rtype: Flask App
     """
-    app = Flask(__name__, static_url_path='/api/static')
+    app = Flask(__name__)
     api = Api(app)
     app.config.from_object(Config)
     db.init_app(app)
