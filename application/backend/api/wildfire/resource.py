@@ -1,16 +1,46 @@
-from flask import Response
+from flask import Response, url_for, current_app
 from flask_restful import Resource
 import pandas as pd
+import os
+from pathlib import Path
+from api import db
+
+
+basedir = Path(os.path.abspath(os.path.dirname(__file__))).parent
+data_file = os.path.join(basedir, 'static\\mapdataall.csv')
 
 class FireList(Resource):
     def get(self):
-        df = pd.read_csv(r'E:\Travail\Projets\csc648-02-fa20-team01\application\backend\api\static\mapdataall.csv')
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from fire_data where incident_type = 'Wildfire';
+            """
+        )
+        data = cur.fetchall()
+        row_headers=[x[0] for x in cur.description]
+        json_data=[]
+        for result in data:
+            json_data.append(dict(zip(row_headers,result)))
+        cur.close()
+        df = pd.DataFrame(json_data)
         return Response(df.to_json(orient="records"), mimetype='application/json')
 
 class FireByCountie(Resource):
     def get(self, countie):
-        df = pd.read_csv(r'E:\Travail\Projets\csc648-02-fa20-team01\application\backend\api\static\mapdataall.csv')
-        df = df[df['incident_county'] == countie]
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from fire_data where incident_type = 'Wildfire' and incident_county = %s;
+            """, (countie,)
+        )
+        data = cur.fetchall()
+        row_headers=[x[0] for x in cur.description]
+        json_data=[]
+        for result in data:
+            json_data.append(dict(zip(row_headers,result)))
+        cur.close()
+        df = pd.DataFrame(json_data)
         if (df.empty) == False:
             return Response(df.to_json(orient="records"), mimetype='application/json')
         else:
@@ -18,8 +48,19 @@ class FireByCountie(Resource):
 
 class FireByName(Resource):
     def get(self, name):
-        df = pd.read_csv(r'E:\Travail\Projets\csc648-02-fa20-team01\application\backend\api\static\mapdataall.csv')
-        df = df[df['incident_name'] == name]
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from fire_data where incident_type = 'Wildfire' and incident_name = %s;
+            """, (name,)
+        )
+        data = cur.fetchall()
+        row_headers=[x[0] for x in cur.description]
+        json_data=[]
+        for result in data:
+            json_data.append(dict(zip(row_headers,result)))
+        cur.close()
+        df = pd.DataFrame(json_data)
         if (df.empty) == False:
             return Response(df.to_json(orient="records"), mimetype='application/json')
         else:
