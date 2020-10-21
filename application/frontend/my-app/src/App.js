@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Switch, Route, Link } from 'react-router-dom';
 import './App.css';
+import MapView from './components/MapView.js';
+import Secret from './Secrets';
+
 
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
@@ -44,7 +47,7 @@ function App() {
     var mode = document.getElementById("myDropdown").value;
     console.log(mode)
     if (mode === "Coronavirus") {
-      axios.get('http://localhost:5000/coronavirus/countie/' + input)
+      axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/countie/' + input)
       .then((res) => {
         console.log(res);
         setResults(res.data);
@@ -54,7 +57,7 @@ function App() {
       });
     }
     else {
-      axios.get('http://localhost:5000/wildfire/countie/' + input)
+      axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/wildfire/countie/' + input)
       .then((res) => {
         console.log(res);
         setResults(res.data);
@@ -81,17 +84,17 @@ function App() {
     setMode(true);
     var input = document.getElementById("myInput").value;
     if (!input) {
-      axios.get('http://localhost:5000/wildfire/counties')
-        .then((res) => {
-          console.log(res);
-          setResults(res.data);
-        })
-        .catch(() => {
-          setResults(null);
-        });
+      axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/wildfire/counties')
+      .then((res) => {
+        console.log(res);
+        setResults(res.data);
+      })
+      .catch(() => {
+        setResults(null);
+      });
     }
     else {
-      axios.get('http://localhost:5000/wildfire/countie/' + input)
+      axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/wildfire/countie/' + input)
       .then((res) => {
         console.log(res);
         setResults(res.data);
@@ -108,23 +111,23 @@ function App() {
     setMode(false);
     var input = document.getElementById("myInput").value;
     if (!input) {
-      axios.get('http://localhost:5000/coronavirus/counties')
-        .then((res) => {
-          console.log(res);
-          setResults(res.data);
-        })
-        .catch(() => {
-          setResults(null);
-        });
-    }
-    else {
-      axios.get('http://localhost:5000/coronavirus/countie/' + input)
+      axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/counties')
       .then((res) => {
         console.log(res);
         setResults(res.data);
       })
       .catch(() => {
         setResults(null);
+      });
+  }
+  else {
+    axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/countie/' + input)
+    .then((res) => {
+      console.log(res);
+      setResults(res.data);
+    })
+    .catch(() => {
+      setResults(null);
       });
     }
   };
@@ -141,13 +144,14 @@ function App() {
         <div className="dropdown">
           <button onClick={myFunction} className="dropbtn">Dropdown</button>
           <div id="myDropdown" className="dropdown-content">
-            <input type="text" placeholder="Search.." id="myInput" />
+          <input type="text" placeholder="Search.." id="myInput" />
               <div onClick={fetchCoronaData}>Corona</div>
               <div onClick={fetchFireData}>Wildfire</div>
           </div>
         </div>
       </header>
 
+      <MapView mapsSecret={Secret.GoogleMaps.ApiKey} />
 
       <div className="resultPage grid-container">
         {results && mode &&
