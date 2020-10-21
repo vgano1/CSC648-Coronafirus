@@ -11,6 +11,8 @@
 # production
 /build
 Secrets.json
+jsonFilter.js
+USGeo.json
 
 # misc
 .DS_Store
