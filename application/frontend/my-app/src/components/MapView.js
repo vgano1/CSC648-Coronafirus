@@ -1,10 +1,12 @@
 import React from 'react';
 import { GoogleMap, LoadScript, Marker, KmlLayer, Data } from '@react-google-maps/api';
 import mapData from '../CAcounties.json';
+import mapTheme from './mapTheme.json';
  
 const containerStyle = {
     width: '100%',
-    height: '200px'
+    height: '100%',
+    float: 'right',
 };
 
 const center = {
@@ -84,6 +86,11 @@ const onLoad = React.useCallback(function callback(map) {
                 mapContainerStyle={containerStyle}
                 center={center}
                 zoom={7}
+                options={
+                    {
+                        styles: mapTheme
+                    }
+                }
                 onLoad={onMapLoad}
                 onUnmount={onUnmount}
             >
@@ -99,3 +106,5 @@ const onLoad = React.useCallback(function callback(map) {
 };
 
 export default MapView;
+
+//mapContainerStyle={containerStyle}

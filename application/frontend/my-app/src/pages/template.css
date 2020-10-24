@@ -1,0 +1,61 @@
+body {
+    background: rgb(176,82,246);
+    background: linear-gradient(346deg, rgba(176,82,246,1) 0%, rgba(240,85,85,1) 100%);
+
+    color: white;
+}
+
+.wrapper { 
+    display: grid;
+    grid-template-areas: 
+      "header header header"
+      "side map map"
+      "footer footer footer";
+    grid-template-rows: 80px 1fr 70px;  
+    grid-template-columns: 30% 1fr 15%;
+    grid-row-gap: 30px;
+    grid-column-gap: 30px;
+    height: 100vh;
+
+    margin: 0;
+    }  
+ 
+  .main-head {
+    grid-area: header;
+
+    background: rgb(42, 42, 42);
+    font-size: 3em;
+    
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    }
+  .main-footer {
+    grid-area: footer;
+
+    background: rgb(42, 42, 42);
+
+    }
+  .map { 
+    grid-area: map;
+    }
+  .side { 
+    grid-area: side; 
+    height: 100%;
+    overflow-y: scroll;
+
+    background: rgb(42, 42, 42);
+
+    }
+  /* Stack the layout on small devices/viewports. */
+  @media all and (max-width: 1000px) {
+    .wrapper { 
+      grid-template-areas: 
+        "header"
+        "map"
+        "side"
+        "footer";
+      grid-template-rows: 80px 1fr 70px 1fr 70px;  
+      grid-template-columns: 1fr;
+   }
+  }
