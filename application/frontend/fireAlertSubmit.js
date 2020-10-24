@@ -22,10 +22,9 @@ const FireAlertSubmit = () => {
                 <div>Show name and associate county/area</div>
                 <div className = "director-name">{result.name}</div>
                 <div className = "county-area">County Area : {result.incident_county}</div>
-
             </div>
             <div>
-                <form action="" method="POST" class="form-alert-submit" onsubmit="" enctype="application/x-www-form-urlencoded">
+                <form action="" method="POST" class="form-alert-submit" onsubmit="" encType="application/x-www-form-urlencoded">
     
                     <label for="fireAlert">Details for Evacuation: </label>
                     <textarea id="fireAlert"cols="50" rows="10"></textarea>
