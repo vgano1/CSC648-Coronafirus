@@ -37,45 +37,6 @@ function App() {
   const [results, setResults] = React.useState(null);
   const [mode, setMode] = React.useState(false); // true for Wildfire, false for Covid
 
-
-  const filterFunction = () => {
-    var input, filter, a, i;
-    input = document.getElementById("myInput").value;
-    var mode = document.getElementById("myDropdown").value;
-    console.log(mode)
-    if (mode === "Coronavirus") {
-      axios.get('http://localhost:5000/coronavirus/countie/' + input)
-      .then((res) => {
-        console.log(res);
-        setResults(res.data);
-      })
-      .catch(() => {
-        setResults(defaultFire);
-      });
-    }
-    else {
-      axios.get('http://localhost:5000/wildfire/countie/' + input)
-      .then((res) => {
-        console.log(res);
-        setResults(res.data);
-      })
-      .catch(() => {
-        setResults(defaultFire);
-      });
-    }
-    // filter = input.value.toUpperCase();
-    // var div = document.getElementById("myDropdown");
-    // a = div.getElementsByTagName("a");
-    // for (i = 0; i < a.length; i++) {
-    //   var txtValue = a[i].textContent || a[i].innerText;
-    //   if (txtValue.toUpperCase().indexOf(filter) > -1) {
-    //     a[i].style.display = "";
-    //   } else {
-    //     a[i].style.display = "none";
-    //   }
-    // }
-  }
-
   const fetchFireData = () => {
     // utility to get all data
     setMode(true);

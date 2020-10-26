@@ -3,8 +3,10 @@ import pandas as pd
 from pathlib import Path
 from flask import Response, jsonify
 from flask_restful import Resource
-from api import db
 import json
+from flask_mysqldb import MySQL
+
+db = MySQL()
 
 class Covid(Resource):
     def get(self):
