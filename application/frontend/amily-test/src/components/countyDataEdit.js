@@ -1,22 +1,23 @@
 import React from 'react';
+
 const CountyDataEdit = () => {
-    const [result, setResult] = React.useState(null);
+    const [result, setResult] = React.useState({});
     React.useEffect(() => {
         //need account's county area and name
         let countyArea;
         let name;
-        fetch('http://localhost:5000/coronavirus/countie/')
+        fetch('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/countie/Napa')
         .then(res => res.json())
         .then(resData => {
-            console.log(resData);
-            setResult(resData);
+            console.log(resData[0]);
+            setResult(resData[0]);
         })
         .catch((e) => {
             console.log(e);
             setResult("None");
         });
 
-    });
+    }, []);
 
     return (
         <div>
@@ -33,7 +34,8 @@ const CountyDataEdit = () => {
                 <div>Recovered : {result.Recovered}</div>
                 <div>Active : {result.Active}</div>
                 <div>Incidence Rate : {result.Incidence_Rate}</div>
-                <div>Case Fatality Ratio : {result.Case-Fatality_Ratio}</div>
+                <div>Case Fatality Ratio : {result['Case-Fatality_Ratio']}</div>
+                {/* {console.log(result)} */}
 
                 <div>change/update data and stat WIP</div>
                 <form action="" method="POST" class="form-data-edit" onsubmit="" enctype="application/x-www-form-urlencoded">
