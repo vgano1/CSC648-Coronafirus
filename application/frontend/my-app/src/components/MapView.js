@@ -28,8 +28,8 @@ const hoverStyle = {
     zIndex: 2
 }
    
-const MapView = ({mapsSecret, filterFunction, setSelected}) => {
-    const [map, setMap] = React.useState(null)
+const MapView = ({mapsSecret, filterFunction, m, setSelected}) => {
+    const [map, setMap] = React.useState(null);
  
 const onLoad = React.useCallback(function callback(map) {
     //const bounds = new window.google.maps.LatLngBounds();
@@ -43,7 +43,7 @@ const onLoad = React.useCallback(function callback(map) {
 
     const onMapLoad = (map) => {
         console.log('map.data: ', map.data)
-        map.data.addGeoJson(mapData)
+        map.data.addGeoJson(mapData);
         map.data.setStyle(countyStyle);
 
         map.data.addListener('mouseover', (event) => {
@@ -60,7 +60,6 @@ const onLoad = React.useCallback(function callback(map) {
         map.data.addListener('click', (event) => {
             // On Click
             setSelected(event.feature.j.NAME);
-            filterFunction(event.feature.j.NAME);
         });
         
         //setMap(map)

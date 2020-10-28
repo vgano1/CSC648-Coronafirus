@@ -20,15 +20,28 @@ function DataView({results, mode}) {
             {results && !mode &&
             results.map((item, index) => {
                 return (
-                    <div className="item griditem" key={index}>
+                    <div className="item" key={index}>
                     <h3>{item.Admin2}</h3>
                     <h4>Confirmed Cases: {item.Confirmed}</h4>
                     <p>Recovered: {item.Recovered}</p>
                     <p>Active: {item.Active}</p>
                     <p>Deaths: {item.Deaths}</p>
+                    <p>Incidence Rate: {item.Incidence_Rate}</p>
                     </div>
                 )
             })}
+
+            {!results && !mode &&
+            <div className="item">
+            <h3>No Covid Data Available for this County!</h3>
+            </div>
+            }
+
+            {!results && mode &&
+            <div className="item">
+            <h3>No Fires in the selected County!</h3>
+            </div>
+            }
         </div>
     );
 }

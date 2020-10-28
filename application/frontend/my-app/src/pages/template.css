@@ -1,8 +1,39 @@
 body {
-    background: rgb(176,82,246);
-    background: linear-gradient(346deg, rgba(176,82,246,1) 0%, rgba(240,85,85,1) 100%);
+  color: white;
+  
+  background: rgb(85,214,67);
+  background: linear-gradient(170deg, rgba(85,214,67,1) 0%, rgba(42,143,235,1) 100%);
+  z-index: 0;
+}
 
-    color: white;
+.background {
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+  position: fixed;
+
+  background: rgb(176,82,246);
+  background: linear-gradient(346deg, rgba(176,82,246,1) 0%, rgba(240,85,85,1) 100%);
+}
+
+.fade {
+  opacity: 0;
+}
+
+.covidBG {
+  background: rgb(85,214,67);
+  background: linear-gradient(170deg, rgba(85,214,67,1) 0%, rgba(42,143,235,1) 100%);
+}
+
+.fireBG {
+  background: rgb(176,82,246);
+  background: linear-gradient(346deg, rgba(176,82,246,1) 0%, rgba(240,85,85,1) 100%);
+}
+
+.foreground {
+  z-index: 2;
 }
 
 .wrapper { 
@@ -18,6 +49,7 @@ body {
     height: 100vh;
 
     margin: 0;
+
     }  
  
   .main-head {
@@ -34,7 +66,6 @@ body {
     grid-area: footer;
 
     background: rgb(42, 42, 42);
-
     }
   .map { 
     grid-area: map;
@@ -57,5 +88,18 @@ body {
         "footer";
       grid-template-rows: 80px 1fr 70px 1fr 70px;  
       grid-template-columns: 1fr;
+
+      grid-row-gap: 0;
    }
+   .main-head {
+      font-size: 1em;
+      height: 8vh;
+      margin-bottom: 2vh;
+    }
+   .map { 
+      height: 45vh;
+    }
+    .side {
+      height: 45vh;
+    }
   }
