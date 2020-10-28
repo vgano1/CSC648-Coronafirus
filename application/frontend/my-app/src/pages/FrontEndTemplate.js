@@ -35,8 +35,8 @@ function FrontEndTemplate() {
         });
       }
       else {
-        setResults(defaultFire);
-        /*
+        // setResults(defaultFire);
+        
         axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/wildfire/countie/' + input)
         .then((res) => {
           console.log(res);
@@ -45,7 +45,7 @@ function FrontEndTemplate() {
         .catch(() => {
           setResults(defaultFire);
         });
-        */
+        
       }
     }
 
