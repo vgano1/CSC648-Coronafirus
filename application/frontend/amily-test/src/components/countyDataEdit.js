@@ -49,12 +49,8 @@ const CountyDataEdit = () => {
                     <label for = "recovered">Recovered : </label>
                     <input id = "recovered" type ="number"></input>
                     
-                    <div>Active : </div>
-                    <input id = "active" type ="radio" value = "false" name = "active"></input>
-                    <label for = "active">True</label>
-
-                    <input id = "not-active" type ="radio" value = "true" name = "active"></input>
-                    <label for = "not-active"> False</label>
+                    <label for = "active">Active :</label>
+                    <input id = "active" type ="number"></input>
 
                     <label for = "incidence_rate">Incidence Rate :</label>
                     <input id ="incidence rate" type = "text"></input>
