@@ -37,17 +37,20 @@ class ApproveCovid(Resource):
         for elem in params:
             parser.add_argument(elem)
         args = parser.parse_args()
-        _, confirmed, death, recovered, _, countie = self.getUpdate(args['update_id'])
+        print(args['update_id'], args['aid'])
+        _, recovered, death, confirmed, _, countie = self.getUpdate(args['update_id'])
         self.approve(args['update_id'], args['aid'])
+        print(confirmed, death, recovered, countie)
         cur = db.connection.cursor()
         cur.execute(
             """
                 UPDATE covid_data
                 SET Confirmed = %s, Deaths = %s, Recovered = %s
-                where Admin2 = %s
+                where Admin2 = %s;
             """, (confirmed, death, recovered, countie)
         )
         db.connection.commit()
+        print(cur.rowcount)
         if cur.rowcount > 0:
             return Response("Record Sucessfully updated", status=200)
         else:
