@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Switch, Route, Link } from 'react-router-dom';
 import './App.css';
+import MapView from './components/MapView.js';
+import Secret from './Secrets';
+
 
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
@@ -37,61 +40,14 @@ function App() {
   const [results, setResults] = React.useState(null);
   const [mode, setMode] = React.useState(false); // true for Wildfire, false for Covid
 
-
-  const filterFunction = () => {
-    var input, filter, a, i;
-    input = document.getElementById("myInput").value;
-    var mode = document.getElementById("myDropdown").value;
-    console.log(mode)
-    if (mode === "Coronavirus") {
-      axios.get('http://localhost:5000/coronavirus/countie/' + input)
-      .then((res) => {
-        console.log(res);
-        setResults(res.data);
-      })
-      .catch(() => {
-        setResults(defaultFire);
-      });
-    }
-    else {
-      axios.get('http://localhost:5000/wildfire/countie/' + input)
-      .then((res) => {
-        console.log(res);
-        setResults(res.data);
-      })
-      .catch(() => {
-        setResults(defaultFire);
-      });
-    }
-    // filter = input.value.toUpperCase();
-    // var div = document.getElementById("myDropdown");
-    // a = div.getElementsByTagName("a");
-    // for (i = 0; i < a.length; i++) {
-    //   var txtValue = a[i].textContent || a[i].innerText;
-    //   if (txtValue.toUpperCase().indexOf(filter) > -1) {
-    //     a[i].style.display = "";
-    //   } else {
-    //     a[i].style.display = "none";
-    //   }
-    // }
-  }
-
   const fetchFireData = () => {
     // utility to get all data
     setMode(true);
+    
+    /*
     var input = document.getElementById("myInput").value;
     if (!input) {
-      axios.get('http://localhost:5000/wildfire/counties')
-        .then((res) => {
-          console.log(res);
-          setResults(res.data);
-        })
-        .catch(() => {
-          setResults(null);
-        });
-    }
-    else {
-      axios.get('http://localhost:5000/wildfire/countie/' + input)
+      axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/wildfire/counties')
       .then((res) => {
         console.log(res);
         setResults(res.data);
@@ -100,25 +56,20 @@ function App() {
         setResults(null);
       });
     }
+    else {
+      filterFunction(selected);
+    }
+    */
   };
   
   const fetchCoronaData = () => {
     // utility to get all data
 
     setMode(false);
+    /*
     var input = document.getElementById("myInput").value;
     if (!input) {
-      axios.get('http://localhost:5000/coronavirus/counties')
-        .then((res) => {
-          console.log(res);
-          setResults(res.data);
-        })
-        .catch(() => {
-          setResults(null);
-        });
-    }
-    else {
-      axios.get('http://localhost:5000/coronavirus/countie/' + input)
+      axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/counties')
       .then((res) => {
         console.log(res);
         setResults(res.data);
@@ -126,7 +77,10 @@ function App() {
       .catch(() => {
         setResults(null);
       });
+    } else {
+      filterFunction(selected);
     }
+    */
   };
 
   return (
@@ -141,13 +95,14 @@ function App() {
         <div className="dropdown">
           <button onClick={myFunction} className="dropbtn">Dropdown</button>
           <div id="myDropdown" className="dropdown-content">
-            <input type="text" placeholder="Search.." id="myInput" />
+          <input type="text" placeholder="Search.." id="myInput" />
               <div onClick={fetchCoronaData}>Corona</div>
               <div onClick={fetchFireData}>Wildfire</div>
           </div>
         </div>
       </header>
 
+      <MapView mapsSecret={Secret.GoogleMaps.ApiKey} filterFunction={filterFunction} setSelected={setSelected} />
 
       <div className="resultPage grid-container">
         {results && mode &&

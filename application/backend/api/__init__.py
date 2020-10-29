@@ -1,8 +1,5 @@
-from flask_mysqldb import MySQL
-
-db = MySQL()
-
 from flask import Flask
+from flask_mysqldb import MySQL
 from flask_restful import Api
 from api.config import Config
 from api.routes import initialize_routes
@@ -19,6 +16,7 @@ def create_api():
     """
     app = Flask(__name__)
     api = Api(app)
+    db = MySQL()
     app.config.from_object(Config)
     db.init_app(app)
     initialize_routes(api)

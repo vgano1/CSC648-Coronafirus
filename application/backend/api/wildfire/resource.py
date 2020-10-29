@@ -3,7 +3,9 @@ from flask_restful import Resource
 import pandas as pd
 import os
 from pathlib import Path
-from api import db
+from flask_mysqldb import MySQL
+
+db = MySQL()
 
 class FireList(Resource):
     def get(self):
