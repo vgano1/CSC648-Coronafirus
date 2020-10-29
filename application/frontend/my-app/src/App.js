@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import MapView from './components/MapView.js';
 import Secret from './Secrets';
-
-
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
+import FrontEndTemplate from './pages/FrontEndTemplate';
 
 function App() {
 
@@ -84,56 +79,37 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome to Coronafirus!</h1>
-        <h2>Created by Team 1, CSC 648, Section</h2>
+    <Router>
+      <div> {/*
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/users">Users</Link>
+            </li>
+          </ul>
+      </nav>  */}
 
-        <h2>Search/Filter Dropdown</h2>
-        <p>Click on the button to open the dropdown menu, and use the input field to search for a specific dropdown link.</p>
-
-        <div className="dropdown">
-          <button onClick={myFunction} className="dropbtn">Dropdown</button>
-          <div id="myDropdown" className="dropdown-content">
-          <input type="text" placeholder="Search.." id="myInput" />
-              <div onClick={fetchCoronaData}>Corona</div>
-              <div onClick={fetchFireData}>Wildfire</div>
-          </div>
-        </div>
-      </header>
-
-      <MapView mapsSecret={Secret.GoogleMaps.ApiKey} filterFunction={filterFunction} setSelected={setSelected} />
-
-      <div className="resultPage grid-container">
-        {results && mode &&
-          results.map((item, index) => {
-            return (
-              <div className="item grid-item" key={index}>
-                <h3>{item.incident_name}</h3>
-                <h4>{item.incident_county}</h4>
-                <p>Acres burned: {item.incident_acres_burned}</p>
-                <p>Containment: {item.incident_acres_burned}</p>
-                <p>Cooperating Agencies: {item.incident_cooperating_agencies}</p>
-              </div>
-            )
-          })}
-
-        
-        {results && !mode &&
-          results.map((item, index) => {
-            return (
-              <div className="item grid-item" key={index}>
-                <h3>{item.Admin2}</h3>
-                <h4>Confirmed Cases: {item.Confirmed}</h4>
-                <p>Recovered: {item.Recovered}</p>
-                <p>Active: {item.Active}</p>
-                <p>Deaths: {item.Deaths}</p>
-              </div>
-            )
-          })}
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch> {/*
+          <Route path="/covid">
+            <CovidPage />
+          </Route>
+          <Route path="/wildfires">
+            <WildfirePage />
+        </Route> */}
+          <Route path="/">
+            <FrontEndTemplate />
+          </Route>
+        </Switch>
       </div>
-
-    </div>
+    </Router>
   );
 }
 

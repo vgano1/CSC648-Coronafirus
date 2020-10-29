@@ -1,0 +1,23 @@
+.gridcontainer {
+    background-color: rgb(42, 42, 42);
+    padding: 10px;
+    max-height: 100%;
+  }
+  .griditem {
+    border-bottom: 3px solid white;
+  }
+
+  .item {
+    background-color: rgb(42, 42, 42);
+    padding: 20px;
+    font-size: 1em;
+    text-align: left;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  h3, h4 { 
+    margin: .5em 0;
+  }

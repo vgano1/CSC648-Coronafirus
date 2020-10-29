@@ -1,10 +1,12 @@
 import React from 'react';
 import { GoogleMap, LoadScript, Marker, KmlLayer, Data } from '@react-google-maps/api';
 import mapData from '../CAcounties.json';
+import mapTheme from './mapTheme.json';
  
 const containerStyle = {
     width: '100%',
-    height: '200px'
+    height: '100%',
+    float: 'right',
 };
 
 const center = {
@@ -26,8 +28,8 @@ const hoverStyle = {
     zIndex: 2
 }
    
-const MapView = ({mapsSecret, filterFunction, setSelected}) => {
-    const [map, setMap] = React.useState(null)
+const MapView = ({mapsSecret, filterFunction, m, setSelected}) => {
+    const [map, setMap] = React.useState(null);
  
 const onLoad = React.useCallback(function callback(map) {
     //const bounds = new window.google.maps.LatLngBounds();
@@ -41,7 +43,7 @@ const onLoad = React.useCallback(function callback(map) {
 
     const onMapLoad = (map) => {
         console.log('map.data: ', map.data)
-        map.data.addGeoJson(mapData)
+        map.data.addGeoJson(mapData);
         map.data.setStyle(countyStyle);
 
         map.data.addListener('mouseover', (event) => {
@@ -58,7 +60,6 @@ const onLoad = React.useCallback(function callback(map) {
         map.data.addListener('click', (event) => {
             // On Click
             setSelected(event.feature.j.NAME);
-            filterFunction(event.feature.j.NAME);
         });
         
         //setMap(map)
@@ -84,6 +85,11 @@ const onLoad = React.useCallback(function callback(map) {
                 mapContainerStyle={containerStyle}
                 center={center}
                 zoom={7}
+                options={
+                    {
+                        styles: mapTheme
+                    }
+                }
                 onLoad={onMapLoad}
                 onUnmount={onUnmount}
             >
@@ -99,3 +105,5 @@ const onLoad = React.useCallback(function callback(map) {
 };
 
 export default MapView;
+
+//mapContainerStyle={containerStyle}
