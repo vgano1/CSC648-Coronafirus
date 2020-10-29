@@ -30,7 +30,7 @@ const CountyDataEdit = () => {
             <div class = "middle">
                 <div>current Info and stat WIP</div>
                 <div>Confirmed : {result.Confirmed}</div>
-                <div>Deaths :  : {result.Deaths}</div>
+                <div>Deaths : {result.Deaths}</div>
                 <div>Recovered : {result.Recovered}</div>
                 <div>Active : {result.Active}</div>
                 <div>Incidence Rate : {result.Incidence_Rate}</div>
