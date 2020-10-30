@@ -49,7 +49,7 @@ const CountyDataEdit = () => {
                     <label for = "recovered">Recovered : </label>
                     <input id = "recovered" type ="number"></input>
                     
-                    <label for = "active">Active :</label>
+                    {/* <label for = "active">Active :</label>
                     <input id = "active" type ="number"></input>
 
                     <label for = "incidence_rate">Incidence Rate :</label>
@@ -63,7 +63,7 @@ const CountyDataEdit = () => {
                         <option value="1" selected>L1</option>
                         <option value="2">L2</option>
                         <option value="3">L3</option>
-                    </select>
+                    </select> */}
 
                     <div class="button-data-edit">
                         <input type="submit"></input>
