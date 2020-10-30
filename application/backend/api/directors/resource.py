@@ -12,16 +12,19 @@ db = MySQL()
 parser = reqparse.RequestParser()
 
 class CovidDataAvailable(Resource):
-    def get(self):
-        did = request.args.get('did')
+    def directorExist(self, did):
         cur = db.connection.cursor()
         cur.execute(
             """
-            Select * from directors where did = %s;
+            Select * from directors where DID = %s
             """, (did)
         )
-        data = cur.fetchall()
-        print(data[0])
+        return True if cur.rowcount > 0 else False
+
+    def get(self):
+        did = request.args.get('did')
+        if (not self.directorExist(did)):
+            return Response("Director does not exist", 500)
         # if (cur.rowcount == 0):
         #     return Response("Director does not exist", status=500)
         # cur = db.connection.cursor()
