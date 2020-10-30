@@ -66,7 +66,7 @@ class CovidUpdates(Resource):
             """, (aid)
         )
         return True if cur.rowcount > 0 else False
-    
+
     def get(self):
         parser.add_argument('aid')
         args = parser.parse_args()
