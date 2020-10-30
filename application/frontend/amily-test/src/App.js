@@ -7,9 +7,10 @@ import FireMain from './components/fireMain';
 
 import FirePage from './pages/firepage';
 import CovidPage from './pages/covidpage';
+import LoginPage from './pages/loginpage';
 
 import { useState, useEffect } from 'react';
-import { Switch, Route, Link} from 'react-router-dom';
+import { Switch, Route, Link, Redirect} from 'react-router-dom';
 function App() {
 
   // const [type, setType] = useState("Covid");
@@ -52,16 +53,21 @@ function App() {
   // <input onClick={handleClick} type="checkbox" class="type" id="type"></input>
   // <label for="type">Covid/Fire</label>
   // {handleDisplay()}
+//took out to test
+//   <nav>
+//   <Link to = "/Fire">Fire</Link>
+//   <Link to = "/Covid">Covid</Link>
+// </nav>
 
   return (
     <div className="App">
-      <nav>
-        <Link to = "/Fire">Fire</Link>
-        <Link to = "/Covid">Covid</Link>
-      </nav>
+
       <Switch>
+        <Route path = "/" exact />
         <Route path = "/Fire" component ={FirePage}/>
         <Route path = "/Covid" component ={CovidPage}/>
+        <Route path = "/3gfsd3t" component = {LoginPage}/>
+        <Redirect from = "*" to = "/"/>
       </Switch>
 
     </div>
