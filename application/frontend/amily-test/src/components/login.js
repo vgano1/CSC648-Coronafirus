@@ -49,14 +49,18 @@ export default function SignIn() {
       email: email,
       password: password,
     }
-    axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/director-login/', data)
+    React.useEffect(() =>{
+      axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/director-login/', data)
       .then(res =>{
         //setState here
+
+        setInformation(res.data[0]);
         console.log(res.data[0]);
       })
       .catch((e) => {
         console.log(e);
-    });
+      });
+    },[]);
   };
 
   return (
