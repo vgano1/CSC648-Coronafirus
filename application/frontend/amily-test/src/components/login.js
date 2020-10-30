@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [information, setInformation] = React.useState({})
   const [email,setEmail] = React.useState('');
   const [password,setPassword] = React.useState('');
 
@@ -50,7 +51,8 @@ export default function SignIn() {
     }
     axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/director-login/', data)
       .then(res =>{
-        console.log(res.data);
+        //setState here
+        console.log(res.data[0]);
       })
       .catch((e) => {
         console.log(e);

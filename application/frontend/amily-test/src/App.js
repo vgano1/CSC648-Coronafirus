@@ -66,7 +66,7 @@ function App() {
         <Route path = "/" exact />
         <Route path = "/Fire" component ={FirePage}/>
         <Route path = "/Covid" component ={CovidPage}/>
-        <Route path = "/3gfsd3t" component = {LoginPage}/>
+        <Route path = "/login" component = {LoginPage}/>
         <Redirect from = "*" to = "/"/>
       </Switch>
 

@@ -67,7 +67,7 @@ class DirectorLogin(Resource):
             cur = db.connection.cursor()
             cur.execute(
                 """
-                Select * from directors where Mail = %s and pwd = %s;
+                Select * from Administrators where mail = %s and pwd = %s;
                 """, (email, password)
             )
             data = cur.fetchall()
