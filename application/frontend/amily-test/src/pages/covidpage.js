@@ -1,6 +1,6 @@
 import React from 'react';
 import CountyAlertSubmit from '../components/countyAlertSubmit';
-import CountyDataEdit from '../components/countyDataEdit';
+import CountyDataEdit2 from '../components/countyDataEdit2';
 import CountyMain from '../components/countyMain';
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 const CovidPage = () => {
@@ -16,7 +16,7 @@ const CovidPage = () => {
             <Switch>
                 <Route path = {`${path}/main`} component ={CountyMain}/>
                 <Route path = {`${path}/alert`} component ={CountyAlertSubmit}/>
-                <Route path ={`${path}/dataedit`} component ={CountyDataEdit}></Route>
+                <Route path ={`${path}/dataedit`} component ={CountyDataEdit2}></Route>
             </Switch>
         </div>
     );
