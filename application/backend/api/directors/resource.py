@@ -28,14 +28,14 @@ class CovidDataAvailable(Resource):
         cur = db.connection.cursor()
         cur.execute(
             """
-            Select * 
+            Select *
             from covid_data C
             where C.Admin2 in (
                 Select D.countie
                 from directors D
-                where D.did = %d
+                where D.DID = %s
             );
-            """, (did)
+            """, (did,)
         )
         data = cur.fetchall()
         if (cur.rowcount == 0):
@@ -111,20 +111,28 @@ class UpdateCovid(Resource):
             return Response("Insertion failed", status=500)
 
 class UpdateFire(Resource):
+    def directorExist(self, did):
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from directors where DID = %s
+            """, (did)
+        )
+        return True if cur.rowcount > 0 else False
+
     def post(self):
-        params = ['confirmed', 'death', 'recovered', 'countie']
-        for elem in params:
-            parser.add_argument(elem)
-        args = parser.parse_args()
-        Confirmed, Death, Recovered, Countie = [x for x in args.values()]
-        dt_string = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+        parser.add_argument('did')
+        parser.add_argument('acres')
+        acres, did = parser.parse_args()['acres'], parser.parse_args()['did']
+        if (not self.directorExist(did)):
+            return Response("Director does not exist", 500)
         randomID = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
         cur = db.connection.cursor()
         cur.execute(
             """
-                INSERT INTO Covid_update (Update_id, Confirmed, Recovered, death, dates, countie)
-                VALUES (%s, %s, %s, %s, %s, %s);
-            """, (randomID, Confirmed, Recovered, Death, dt_string, Countie)
+                INSERT INTO fire_update (Update_id, incident_acres_burned)
+                VALUES (%s, %s);
+            """, (randomID, acres)
         )
         db.connection.commit()
         if cur.rowcount > 0:
