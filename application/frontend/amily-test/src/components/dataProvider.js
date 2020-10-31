@@ -91,3 +91,4 @@ export default {
             body: JSON.stringify(params.data),
         }).then(({ json }) => ({ data: json }));
     }
+};
