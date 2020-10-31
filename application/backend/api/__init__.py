@@ -4,6 +4,7 @@ from flask_restful import Api
 from api.config import Config
 from api.routes import initialize_routes
 from flask_cors import CORS
+from flask_mail import Mail, Message
 
 def create_api():
     """
@@ -21,4 +22,5 @@ def create_api():
     db.init_app(app)
     initialize_routes(api)
     CORS(app)
+    Mail(app)
     return app
