@@ -9,6 +9,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useDispatch } from 'react-redux';
+import { setIsLoggedIn, setUserType } from '../redux/actions/userActions';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,22 +40,31 @@ export default function SignIn() {
   const [information, setInformation] = React.useState({})
   const [email,setEmail] = React.useState('');
   const [password,setPassword] = React.useState('');
+  //const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const dispatch = useDispatch();
 
-  const getPassword = (g) => {
+
+  const updatePassword = (g) => {
     setPassword(g.target.value);
   };
-  const getEmail = (g) => {
+  const updateEmail = (g) => {
     setEmail(g.target.value);
   }
+
   const redirect = () => {
-    if (information["DID"] === undefined) {
+    if (information["DID"] > 0) {
       // Redirect somewhere
+      //setIsLoggedIn(true);
+      dispatch(setIsLoggedIn(true));
+      dispatch(setUserType('Covid'));
+
     }
-    else if (information["AID"] === undefined) {
+    else if (information["AID"] > 0) {
       // Redirect somewhere else again
-    }
-    else {
-      // GTFO
+      //setIsLoggedIn(true);
+      dispatch(setIsLoggedIn(true));
+      dispatch(setUserType('Fire'));
+
     }
   };
 
@@ -63,9 +75,9 @@ export default function SignIn() {
     }
     axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/director-login/', data)
     .then(res => {
+      console.log(res.data);
       setInformation(res.data[0]);
-      redirect();
-      console.log(res.data[0]);
+      redirect(res.data);
     })
     .catch((e) => {
       console.log(e);
@@ -73,53 +85,57 @@ export default function SignIn() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <div className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange = {getEmail}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange = {getPassword}
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick = {authenticate}
-          >
-            Sign In
-          </Button>
+    <div>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <div className={classes.form}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange = {updateEmail}
+              value = {email}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange = {updatePassword}
+              value = {password}
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick = {authenticate}
+            >
+              Sign In
+            </Button>
+          </div>
         </div>
-      </div>
-      <Box mt={8}>
-      </Box>
-    </Container>
+        <Box mt={8}>
+        </Box>
+      </Container>
+    </div>
   );
 }

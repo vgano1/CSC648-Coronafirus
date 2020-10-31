@@ -8,6 +8,7 @@ import FireMain from './components/fireMain';
 import FirePage from './pages/firepage';
 import CovidPage from './pages/covidpage';
 import LoginPage from './pages/loginpage';
+import {PrivateRoute} from './pages/privateroute'
 
 import { useState, useEffect } from 'react';
 import { Switch, Route, Link, Redirect} from 'react-router-dom';
@@ -64,9 +65,9 @@ function App() {
 
       <Switch>
         <Route path = "/" exact />
-        <Route path = "/Fire" component ={FirePage}/>
-        <Route path = "/Covid" component ={CovidPage}/>
-        <Route path = "/login" component = {LoginPage}/>
+        <PrivateRoute path = "/Fire" component = {FirePage}/>
+        <PrivateRoute path = "/Covid" component = {CovidPage}/>
+        <Route path = "/login" component = {LoginPage} exact/>
         <Redirect from = "*" to = "/"/>
       </Switch>
 

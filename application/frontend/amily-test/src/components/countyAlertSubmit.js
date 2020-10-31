@@ -25,7 +25,7 @@ const CountyAlertSubmit = () => {
                 <div>{result.Admin2}</div>
             </div>
             <div class="middle">
-                <form action="" method="POST" class="form-alert-submit" onsubmit="" enctype="application/x-www-form-urlencoded">
+                <form action="" method="POST" className="form-alert-submit" onSubmit="" encType="application/x-www-form-urlencoded">
                     
                     <label for="info">Field for info and instructions for shelter in place</label>
                     <textarea id="info"cols="50" rows="10"></textarea>
