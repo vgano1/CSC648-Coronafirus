@@ -5,11 +5,13 @@ import FireAlertSubmit from './components/fireAlertSubmit';
 import FireDataEdit from './components/fireDataEdit';
 import FireMain from './components/fireMain';
 
+
 import FirePage from './pages/firepage';
 import CovidPage from './pages/covidpage';
 import LoginPage from './pages/loginpage';
 import AdminPage from './pages/adminpage';
 import {PrivateRoute} from './pages/privateroute'
+
 
 import { useState, useEffect } from 'react';
 import { Switch, Route, Link, Redirect} from 'react-router-dom';
