@@ -12,52 +12,63 @@ db = MySQL()
 parser = reqparse.RequestParser()
 
 class CovidDataAvailable(Resource):
-    def get(self):
-        did = request.args.get('did')
+    def directorExist(self, did):
         cur = db.connection.cursor()
         cur.execute(
             """
-            Select * from directors where did = %s;
+            Select * from directors where DID = %s
+            """, (did)
+        )
+        return True if cur.rowcount > 0 else False
+
+    def get(self):
+        did = request.args.get('did')
+        if (not self.directorExist(did)):
+            return Response("Director does not exist", 500)
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * 
+            from covid_data C
+            where C.Admin2 in (
+                Select D.countie
+                from directors D
+                where D.did = %d
+            );
             """, (did)
         )
         data = cur.fetchall()
-        print(data[0])
-        # if (cur.rowcount == 0):
-        #     return Response("Director does not exist", status=500)
-        # cur = db.connection.cursor()
-        # cur.execute(
-        #     """
-        #     Select * from directors covid_data Admin2 = %s;
-        #     """, (countie)
-        # )
-        # data = cur.fetchall()
-        # if (cur.rowcount == 0):
-        #         return Response("No account found!!")
-        # row_headers=[x[0] for x in cur.description]
-        # json_data=[]
-        # for result in data:
-        #     json_data.append(dict(zip(row_headers,result)))
-        # cur.close()
-        # df = pd.DataFrame(json_data)
-        # return Response(df.to_json(orient="records"), mimetype='application/json')
+        if (cur.rowcount == 0):
+                return Response("No data found!!", 500)
+        else:
+            row_headers=[x[0] for x in cur.description]
+            json_data=[]
+            for result in data:
+                json_data.append(dict(zip(row_headers,result)))
+            cur.close()
+            df = pd.DataFrame(json_data)
+            return Response(df.to_json(orient="records"), mimetype='application/json')
 
 class DirectorLogin(Resource):
-    def get(self):
-        username = request.args.get('username')
-        password = request.args.get('password')
+    def post(self):
+        parser.add_argument('email')
+        parser.add_argument('password')
+        args = parser.parse_args()
+        email = args['email']
+        password = args['password']
         cur = db.connection.cursor()
         cur.execute(
             """
             Select * from directors where Mail = %s and pwd = %s;
-            """, (username, password)
+            """, (email, password)
         )
         data = cur.fetchall()
         if (cur.rowcount == 0):
             cur = db.connection.cursor()
             cur.execute(
                 """
-                Select * from directors where Mail = %s and pwd = %s;
-                """, (username, password)
+                Select * from Administrators where mail = %s and pwd = %s;
+                """, (email, password)
             )
             data = cur.fetchall()
             if (cur.rowcount == 0):
@@ -77,6 +88,13 @@ class UpdateCovid(Resource):
             parser.add_argument(elem)
         args = parser.parse_args()
         Confirmed, Death, Recovered, Countie = [x for x in args.values()]
+        try:
+            int(Confirmed)
+            int(Death)
+            int(Recovered)
+            str(Countie)
+        except:
+            return ("Wrong input type", 500)
         dt_string = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
         randomID = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
         cur = db.connection.cursor()
