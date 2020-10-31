@@ -19,14 +19,14 @@ const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
 
 function AdminApp() {
     return (
-        <Admin dashboard={Dashboard} dataProvider={dataProvider}>
+        <AdminApp dashboard={Dashboard} dataProvider={dataProvider}>
             <Resource name="users" list={UserList} icon={GroupIcon}/>
             <Resource name="posts" list={PostList} edit={PostEdit} create={PostCreate} icon={PostAddIcon}/>
             <Resource name="todos" list={TodoList} edit={TodoEdit} create={TodoCreate} icon={FormatListBulletedIcon}/>
             <Resource name="albums" list={AlbumList} edit={AlbumEdit} create={AlbumCreate} icon={PhotoAlbumIcon}/>
             <Resource name="photos" list={PhotoList} edit={PhotoEdit} create={PhotoCreate} icon={PhotoSizeSelectActualIcon}/>
             <Resource name="comments" list={CommentList} edit={CommentEdit} create={CommentCreate} icon={ChatBubbleIcon}/>
-        </Admin>
+        </AdminApp>
     );
 }
 
