@@ -5,7 +5,6 @@ import FireMain from '../components/fireMain';
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 const FirePage = () => {
     let {path, url} = useRouteMatch();
-    console.log(path + " " + url);
     return (
         <div>
             <nav>

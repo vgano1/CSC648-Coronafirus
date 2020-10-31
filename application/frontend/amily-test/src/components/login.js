@@ -9,8 +9,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useDispatch } from 'react-redux';
-import { setIsLoggedIn, setUserType } from '../redux/actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setInformation, setIsLoggedIn, setUserType } from '../redux/actions/userActions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,10 +37,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const [information, setInformation] = React.useState({})
+  //const [information, setInformation] = React.useState({})
   const [email,setEmail] = React.useState('');
   const [password,setPassword] = React.useState('');
   //const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const information = useSelector(state => state.userReducer.information);
   const dispatch = useDispatch();
 
 
@@ -51,33 +52,36 @@ export default function SignIn() {
     setEmail(g.target.value);
   }
 
-  const redirect = () => {
-    if (information["DID"] > 0) {
-      // Redirect somewhere
-      //setIsLoggedIn(true);
+  const redirect = (props) => {
+    //set userType : Covid , Fire , Admin
+    if (props["DID"] > 0) {
+      if(props.department ==='Health'){
+        dispatch(setUserType('Covid'));
+      }
+      else if(props.department === 'Fire'){
+        dispatch(setUserType('Fire'));
+      }
+      // set information object and login status
+      dispatch(setInformation(props));
       dispatch(setIsLoggedIn(true));
-      dispatch(setUserType('Covid'));
-
     }
-    else if (information["AID"] > 0) {
-      // Redirect somewhere else again
-      //setIsLoggedIn(true);
+    else if (props["AID"] > 0) {
+      dispatch(setUserType('Admin'));
+      // set information object and login status
+      dispatch(setInformation(props));
       dispatch(setIsLoggedIn(true));
-      dispatch(setUserType('Fire'));
-
     }
   };
 
-  const authenticate = (g) => {
+  const authenticate = () => {
     const data = {
       email: email,
       password: password,
     }
     axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/director-login/', data)
     .then(res => {
-      console.log(res.data);
-      setInformation(res.data[0]);
-      redirect(res.data);
+      //console.log(res.data);
+      redirect(res.data[0]);
     })
     .catch((e) => {
       console.log(e);

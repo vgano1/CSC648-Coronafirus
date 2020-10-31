@@ -10,3 +10,7 @@ export const setUserType = (userType) =>({
     type: 'USER_TYPE',
     userType,
 });
+export const setInformation = (information) => ({
+    type:'USER_INFO',
+    information,
+});

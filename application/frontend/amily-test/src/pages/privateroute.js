@@ -1,10 +1,9 @@
-import react from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router';
 
 export const PrivateRoute = (props) => {
     const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
-    const userType = useSelector(state =>state.userReducer.userType);
+    const userType = useSelector(state => state.userReducer.userType);
 
     //console.log(props);
     if(isLoggedIn){
@@ -15,7 +14,7 @@ export const PrivateRoute = (props) => {
         }
         else if (userType ==='Fire'){
             return (
-                <Route path = {props.path} component = {props.component}/>
+                <Route path = {props.path} component = {props.component} />
             );
         }
     }else {
@@ -24,4 +23,4 @@ export const PrivateRoute = (props) => {
         );
     }
 
-}
+};

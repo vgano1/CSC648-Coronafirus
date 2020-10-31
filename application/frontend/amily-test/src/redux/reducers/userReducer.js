@@ -2,6 +2,7 @@ const initState = () => ({
     name: '',
     isLoggedIn : false,
     userType : '',
+    information: {},
 });
 
 const userReducer = (state = initState(), action) => {
@@ -20,6 +21,11 @@ const userReducer = (state = initState(), action) => {
             return {
                 ...state,
                 userType: action.userType,
+            };
+        case 'USER_INFO':
+            return {
+                ...state,
+                information: action.information,
             };
         default:
             return state;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Login from '../components/login'
-import { Switch, Route, Link, Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 {/* <Switch>
@@ -28,14 +28,12 @@ import { useSelector } from 'react-redux';
             return (<Redirect from = "/login" to = "/Fire"/>);
         }
         else if (userType === 'Admin'){
-           <Redirect from = "/login" to = "/"/>
+           return (<Redirect from = "/login" to = "/"/>);
         }
      }
     return (
         <div>
-            {!isLoggedIn && (
-                <Login></Login>
-            )}
+            {!isLoggedIn && (<Login></Login>)}
         </div>
     );
  }
