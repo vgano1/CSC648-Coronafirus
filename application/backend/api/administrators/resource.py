@@ -202,7 +202,7 @@ class SendCovidAlert(Resource):
     
     def send_mail(self, receiver, mailObject, message):
         mail = Mail()
-        msg = Message(mailObject, sender='coronafirus@no-reply.com', recipients=[receiver])
+        msg = Message(mailObject, sender='trabelsisouhib@gmail.com', recipients=[receiver])
         msg.body = message
         mail.send(msg)
 
