@@ -7,7 +7,7 @@ const CountyDataEdit2 = () => {
         //need account's county area and name
         let countyArea;
         let name;
-        fetch('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/countie/Napa')
+        fetch('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/director-countie/?did=1')
         .then(res => res.json())
         .then(resData => {
             console.log(resData[0]);
@@ -25,7 +25,7 @@ const CountyDataEdit2 = () => {
         <div>
             <div class="top-right">
                 <div>Show name and associate county/area</div>
-                <div>Name: Amily</div>
+                <div>Name: {result.Name}</div>
                 <div>Current County: {result.Admin2}</div>
             </div>
 
