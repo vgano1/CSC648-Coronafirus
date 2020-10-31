@@ -44,23 +44,32 @@ export default function SignIn() {
   const getEmail = (g) => {
     setEmail(g.target.value);
   }
+  const redirect = () => {
+    if (information["DID"] === undefined) {
+      // Redirect somewhere
+    }
+    else if (information["AID"] === undefined) {
+      // Redirect somewhere else again
+    }
+    else {
+      // GTFO
+    }
+  };
+
   const authenticate = (g) => {
     const data = {
       email: email,
       password: password,
     }
-    React.useEffect(() =>{
-      axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/director-login/', data)
-      .then(res =>{
-        //setState here
-
-        setInformation(res.data[0]);
-        console.log(res.data[0]);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    },[]);
+    axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/director-login/', data)
+    .then(res => {
+      setInformation(res.data[0]);
+      redirect();
+      console.log(res.data[0]);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
   };
 
   return (

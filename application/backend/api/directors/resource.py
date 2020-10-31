@@ -88,6 +88,13 @@ class UpdateCovid(Resource):
             parser.add_argument(elem)
         args = parser.parse_args()
         Confirmed, Death, Recovered, Countie = [x for x in args.values()]
+        try:
+            int(Confirmed)
+            int(Death)
+            int(Recovered)
+            str(Countie)
+        except:
+            return ("Wrong input type", 500)
         dt_string = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
         randomID = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
         cur = db.connection.cursor()
@@ -110,13 +117,6 @@ class UpdateFire(Resource):
             parser.add_argument(elem)
         args = parser.parse_args()
         Confirmed, Death, Recovered, Countie = [x for x in args.values()]
-        try:
-            int(Confirmed)
-            int(Death)
-            int(Recovered)
-            str(Countie)
-        except:
-            return ("Bad INPUT VITOOOO !!!", 500)
         dt_string = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
         randomID = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
         cur = db.connection.cursor()
