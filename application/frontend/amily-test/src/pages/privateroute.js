@@ -17,6 +17,11 @@ export const PrivateRoute = (props) => {
                 <Route path = {props.path} component = {props.component} />
             );
         }
+        else if(userType ==='Admin'){
+            return (
+                <Route path = {props.path} component = {props.component} />
+            ); 
+        }
     }else {
         return(
             <Redirect to = "/login" />

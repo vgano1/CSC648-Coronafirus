@@ -28,7 +28,7 @@ import { useSelector } from 'react-redux';
             return (<Redirect from = "/login" to = "/Fire"/>);
         }
         else if (userType === 'Admin'){
-           return (<Redirect from = "/login" to = "/"/>);
+           return (<Redirect from = "/login" to = "/Admin"/>);
         }
      }
     return (

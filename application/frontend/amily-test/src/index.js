@@ -8,6 +8,7 @@ import rootReducer from './redux/reducers/rootReducer';
 //Allows components to access store via context
 import {Provider} from 'react-redux';
 //create global datastore for the app
+
 const store = createStore(rootReducer);
 
 ReactDOM.render(
