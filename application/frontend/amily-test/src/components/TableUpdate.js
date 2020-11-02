@@ -22,6 +22,7 @@ const TableUpdate = () => {
       console.log(res.data[0]);
       setResult(res.data)
     });
+    
   }, [])
 
   const useStyles = makeStyles({
