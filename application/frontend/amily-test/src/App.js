@@ -7,7 +7,6 @@ import FireMain from './components/fireMain';
 
 
 import FirePage from './pages/firepage';
-import UpdatedFirePage from './pages/UpdatedFirePage';
 import CovidPage from './pages/covidpage';
 import LoginPage from './pages/loginpage';
 import AdminPage from './pages/adminpage';
@@ -69,8 +68,13 @@ function App() {
     <div className="App">
 
       <Switch>
+<<<<<<< HEAD
         <Route path = "/" exact />
         <PrivateRoute path = "/Fire" component = {UpdatedFirePage}/>
+=======
+        <Route path = "/signup" component = {SignUp} exact />
+        <PrivateRoute path = "/Fire" component = {FirePage}/>
+>>>>>>> 3687b2c46b8ec0add08a0447a889df3d9defb56f
         <PrivateRoute path = "/Covid" component = {CovidPage}/>
         <PrivateRoute path = "/Admin" component = {AdminPage}/>
         <Route path = "/login" component = {LoginPage} exact/>
