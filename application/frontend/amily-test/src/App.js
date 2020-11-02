@@ -1,10 +1,3 @@
-import CountyAlertSubmit from './components/countyAlertSubmit';
-import CountyDataEdit from './components/countyDataEdit';
-import CountyMain from './components/countyMain';
-import FireAlertSubmit from './components/fireAlertSubmit';
-import FireDataEdit from './components/fireDataEdit';
-import FireMain from './components/fireMain';
-
 
 import UpdatedFirePage from './pages/UpdatedFirePage';
 import CovidPage from './pages/covidpage';
