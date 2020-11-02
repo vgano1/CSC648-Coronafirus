@@ -1,13 +1,12 @@
-import CountyAlertSubmit from './components/countyAlertSubmit';
-import CountyDataEdit from './components/countyDataEdit';
-import CountyMain from './components/countyMain';
-import FireAlertSubmit from './components/fireAlertSubmit';
-import FireDataEdit from './components/fireDataEdit';
-import FireMain from './components/fireMain';
 
+<<<<<<< HEAD
 
 import FirePage from './pages/UpdatedFirePage';
 import CovidPage from './pages/UpdatedCovidPage';
+=======
+import UpdatedFirePage from './pages/UpdatedFirePage';
+import CovidPage from './pages/covidpage';
+>>>>>>> 36188dc31fa706f39b7f2af3bafcc2ff237a9516
 import LoginPage from './pages/loginpage';
 import AdminPage from './pages/adminpage';
 import {PrivateRoute} from './pages/privateroute'

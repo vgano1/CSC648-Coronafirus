@@ -6,11 +6,12 @@ const CountyAlertSubmit = () => {
     const [result, setResult] = React.useState({});
     //info to post/send
     const [shelterInfo,setShelterInfo] = React.useState('');
-    const [addInfo,setAddInfo] = React.useState('');
     //user info
     const information  = useSelector(state =>state.userReducer.information);
+    console.log(information);
     let countyArea = information.countie;
     let name = information.name;
+    let did = information.DID;
 
     React.useEffect(() => {
 
@@ -27,23 +28,22 @@ const CountyAlertSubmit = () => {
     }, []);
 
     const updateShelterInfo = (g) => {
+        console.log(g.target.value);
         setShelterInfo(g.target.value);
-    }
-
-    const updateAddInfo = (g) => {
-        setAddInfo(g.target.value);
     }
     const submit1 = () =>{
         const data = {
-            //put info here
+            'did': did,
+            'message': shelterInfo
         };
-        // axios.post(url,data)
-        // .then((res)=>{
-        //     console.log(res);
-        // })
-        // .catch((e)=>{
-        //     console.log(e);
-        // });
+        console.log(data);
+        axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/create-alert/', data)
+        .then((res)=>{
+            console.log(res);
+        })
+        .catch((e)=>{
+            console.log(e);
+        });
     }
 
     return (
@@ -58,9 +58,6 @@ const CountyAlertSubmit = () => {
                     
                     <label for="info">Field for info and instructions for shelter in place</label>
                     <textarea id="info"cols="50" rows="10" onChange = {updateShelterInfo}></textarea>
-
-                    <label for="addInfo">Additional Information</label>
-                    <textarea id="addInfo" cols="50" rows="10" onChange = {updateAddInfo}></textarea>
 
                     <input type="submit" onClick = {submit1}></input>
                 </div>
