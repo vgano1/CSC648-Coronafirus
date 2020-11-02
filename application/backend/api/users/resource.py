@@ -15,7 +15,7 @@ parser = reqparse.RequestParser()
 class CreateUser(Resource):
 
     def post(self):
-        params = ['mail', 'pwd', 'countie']
+        params = ['mail', 'countie']
         for elem in params:
             parser.add_argument(elem)
         args = parser.parse_args()
@@ -24,9 +24,9 @@ class CreateUser(Resource):
         cur = db.connection.cursor()
         cur.execute(
             """
-                INSERT INTO users (Mail, pwd, countie)
+                INSERT INTO users (Mail, countie)
                 VALUES (%s, %s, %s);
-            """, (mail, pwd, countie)
+            """, (mail, countie)
         )
         db.connection.commit()
         return Response("User created", 200)

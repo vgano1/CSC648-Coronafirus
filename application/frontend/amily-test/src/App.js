@@ -11,6 +11,7 @@ import CovidPage from './pages/covidpage';
 import LoginPage from './pages/loginpage';
 import AdminPage from './pages/adminpage';
 import {PrivateRoute} from './pages/privateroute'
+import SignUp from './components/SignUp';
 
 
 import { useState, useEffect } from 'react';
@@ -67,7 +68,7 @@ function App() {
     <div className="App">
 
       <Switch>
-        <Route path = "/" exact />
+        <Route path = "/" component = {SignUp} exact />
         <PrivateRoute path = "/Fire" component = {FirePage}/>
         <PrivateRoute path = "/Covid" component = {CovidPage}/>
         <PrivateRoute path = "/Admin" component = {AdminPage}/>
