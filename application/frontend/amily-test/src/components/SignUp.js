@@ -19,6 +19,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import Fade from '@material-ui/core/Fade';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
+import { Redirect } from "react-router-dom";
+
+const axios = require('axios');
 
 function Copyright() {
   return (
@@ -75,15 +78,25 @@ export default function SignUp() {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if ( re.test(email) ) {
-        setSuccess(true)
-        setError(false)
+        setSuccess(true);
+        setError(false);
+        console.log(email);
+        console.log(countie);
+        axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/create-user/', {
+          "mail": email,
+          "countie": countie
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
     else {
       setSuccess(false)
       setError(true)
     }
-    console.log("success", success);
-    console.log("error", error);
 }
 
   return (
