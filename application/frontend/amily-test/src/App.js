@@ -6,9 +6,13 @@ import FireDataEdit from './components/fireDataEdit';
 import FireMain from './components/fireMain';
 
 
+<<<<<<< HEAD
+import FirePage from './pages/UpdatedFirePage';
+=======
 import FirePage from './pages/firepage';
 import UpdatedFirePage from './pages/UpdatedFirePage';
 
+>>>>>>> e7a328ced04559df72b49393006eebbd2b7fa23b
 import CovidPage from './pages/covidpage';
 import LoginPage from './pages/loginpage';
 import AdminPage from './pages/adminpage';
