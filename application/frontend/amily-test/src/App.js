@@ -69,13 +69,8 @@ function App() {
     <div className="App">
 
       <Switch>
-<<<<<<< HEAD
         <Route path = "/" exact />
         <PrivateRoute path = "/Fire" component = {UpdatedFirePage}/>
-=======
-        <Route path = "/" component = {SignUp} exact />
-        <PrivateRoute path = "/Fire" component = {FirePage}/>
->>>>>>> 748c937f2f8f77ea1315a59a849713420b161807
         <PrivateRoute path = "/Covid" component = {CovidPage}/>
         <PrivateRoute path = "/Admin" component = {AdminPage}/>
         <Route path = "/login" component = {LoginPage} exact/>
