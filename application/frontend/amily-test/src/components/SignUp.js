@@ -58,10 +58,33 @@ export default function SignUp() {
 
   const [countie, setCountie] = React.useState('San Francisco');
   const [success, setSuccess] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [email, setEmail] = React.useState('');
 
-  const handleChange = (event) => {
+  const handleChangeCountie = (event) => {
     setCountie(event.target.value);
   };
+
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  let handleEmailVerification = () => {
+
+    // don't remember from where i copied this code, but this works.
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if ( re.test(email) ) {
+        setSuccess(true)
+        setError(false)
+    }
+    else {
+      setSuccess(false)
+      setError(true)
+    }
+    console.log("success", success);
+    console.log("error", error);
+}
 
   return (
     <Container component="main" maxWidth="xs">
@@ -84,6 +107,7 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleChangeEmail}
               />
             </Grid>
             <Grid item xs={12}>
@@ -92,7 +116,7 @@ export default function SignUp() {
                 labelId="countie-select-label"
                 id="countie-simple-select"
                 value={countie}
-                onChange={handleChange}
+                onChange={handleChangeCountie}
                 >
                 {counties.map((item, i) => { return <MenuItem key={i} value={item}>{item} </MenuItem> })}
                 </Select>
@@ -105,13 +129,19 @@ export default function SignUp() {
                     </Alert>
                 </Grid>
             : null}
+              {error ? 
+                <Alert severity="error">
+                  <AlertTitle>Error</AlertTitle>
+                  Bad email input — <strong>Please put a correct email!</strong>
+                </Alert>
+            : null}
           </Grid>
           <Button
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => setSuccess(true)}
+            onClick={() => handleEmailVerification()}
           >
             Receive alerts
           </Button>
