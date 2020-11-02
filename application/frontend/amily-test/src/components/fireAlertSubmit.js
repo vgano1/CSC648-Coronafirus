@@ -30,13 +30,6 @@ const FireAlertSubmit = () => {
                     <label for="fireAlert">Details for Evacuation: </label>
                     <textarea id="fireAlert"cols="50" rows="10"></textarea>
 
-                    <label for="evacLevel">Evacuation Level</label>
-                    <select id="evacLevel" >
-                        <option value="1" selected>L1</option>
-                        <option value="2">L2</option>
-                        <option value="3">L3</option>
-                    </select>
-
                     <label for="addInfo">Additional Information on the severity and danger: </label>
                     <textarea id="addInfo" cols="50" rows="10"></textarea>
 
