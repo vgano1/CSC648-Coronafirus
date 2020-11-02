@@ -1,4 +1,6 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
+
 const FireAlertSubmit = () => {
     const [result, setResult] = React.useState({});
     React.useEffect(() =>{
@@ -19,23 +21,25 @@ const FireAlertSubmit = () => {
 
         return (
         <div>
-            <div class="top-right">
-                <div>Show name and associate county/area</div>
-                <div className = "director-name">{result.name}</div>
-                <div className = "county-area">County Area : {result.incident_county}</div>
-            </div>
-            <div>
-                <form action="" method="POST" class="form-alert-submit" onsubmit="" encType="application/x-www-form-urlencoded">
-    
-                    <label for="fireAlert">Details for Evacuation: </label>
-                    <textarea id="fireAlert"cols="50" rows="10"></textarea>
+            <Grid container justify = "center">
+                <div class="top-right">
+                    <div>Show name and associate county/area</div>
+                    <div className = "director-name">{result.name}</div>
+                    <div className = "county-area">County Area : {result.incident_county}</div>
+                </div>
+                <div>
+                    <form action="" method="POST" class="form-alert-submit" onsubmit="" encType="application/x-www-form-urlencoded">
+        
+                        <label for="fireAlert">Details for Evacuation: </label>
+                        <textarea id="fireAlert"cols="50" rows="10"></textarea>
 
-                    <label for="addInfo">Additional Information on the severity and danger: </label>
-                    <textarea id="addInfo" cols="50" rows="10"></textarea>
+                        <label for="addInfo">Additional Information on the severity and danger: </label>
+                        <textarea id="addInfo" cols="50" rows="10"></textarea>
 
-                    <input type="submit"></input>
-                </form>
-            </div>
+                        <input type="submit"></input>
+                    </form>
+                </div>
+            </Grid>
         </div>
         );
     } 
