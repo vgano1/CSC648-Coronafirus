@@ -1,12 +1,17 @@
+import axios from 'axios';
 import React from 'react';
 import { useSelector } from 'react-redux';
 const CountyAlertSubmit = () => {
     //county info
     const [result, setResult] = React.useState({});
+    //info to post/send
+    const [shelterInfo,setShelterInfo] = React.useState('');
+    const [addInfo,setAddInfo] = React.useState('');
     //user info
     const information  = useSelector(state =>state.userReducer.information);
     let countyArea = information.countie;
     let name = information.name;
+
     React.useEffect(() => {
 
         fetch('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/countie/'+ countyArea)
@@ -17,10 +22,29 @@ const CountyAlertSubmit = () => {
         })
         .catch((e) => {
             console.log(e);
-            setResult("None");
         });
 
     }, []);
+
+    const updateShelterInfo = (g) => {
+        setShelterInfo(g.target.value);
+    }
+
+    const updateAddInfo = (g) => {
+        setAddInfo(g.target.value);
+    }
+    const submit1 = () =>{
+        const data = {
+            //put info here
+        };
+        // axios.post(url,data)
+        // .then((res)=>{
+        //     console.log(res);
+        // })
+        // .catch((e)=>{
+        //     console.log(e);
+        // });
+    }
 
     return (
         <div>
@@ -30,16 +54,16 @@ const CountyAlertSubmit = () => {
                 <div>County : {countyArea}</div>
             </div>
             <div class="middle">
-                <form action="" method="POST" className="form-alert-submit" onSubmit="" encType="application/x-www-form-urlencoded">
+                <div className="form-alert-submit">
                     
                     <label for="info">Field for info and instructions for shelter in place</label>
-                    <textarea id="info"cols="50" rows="10"></textarea>
+                    <textarea id="info"cols="50" rows="10" onChange = {updateShelterInfo}></textarea>
 
                     <label for="addInfo">Additional Information</label>
-                    <textarea id="addInfo" cols="50" rows="10"></textarea>
+                    <textarea id="addInfo" cols="50" rows="10" onChange = {updateAddInfo}></textarea>
 
-                    <input type="submit"></input>
-                </form>
+                    <input type="submit" onClick = {submit1}></input>
+                </div>
             </div>
         </div>
     );
