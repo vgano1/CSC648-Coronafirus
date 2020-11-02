@@ -63,6 +63,7 @@ export default function SignUp() {
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [email, setEmail] = React.useState('');
+  const [redirect, setRedirect] = React.useState(false);
 
   const handleChangeCountie = (event) => {
     setCountie(event.target.value);
@@ -78,16 +79,14 @@ export default function SignUp() {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if ( re.test(email) ) {
-        setSuccess(true);
-        setError(false);
-        console.log(email);
-        console.log(countie);
+        setSuccess(true)
+        setError(false)
         axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/create-user/', {
           "mail": email,
           "countie": countie
         })
         .then(function (response) {
-          console.log(response);
+          setRedirect(true);
         })
         .catch(function (error) {
           console.log(error);
@@ -100,7 +99,9 @@ export default function SignUp() {
 }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div>
+    {redirect === false ? (
+      <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -164,5 +165,7 @@ export default function SignUp() {
         <Copyright />
       </Box>
     </Container>
+    ) : <Redirect to="/" />}
+    </div>
   );
 }
