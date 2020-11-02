@@ -20,8 +20,8 @@ import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
-import FireAlertSubmit from '../components/fireAlertSubmit';
-import BasicTable from '../components/BasicTable';
+import CountyAlertSubmit from '../components/countyAlertSubmit';
+import BasicTable from '../components/BasicTableCovid';
 import { Route, MemoryRouter } from 'react-router';
 import { Link as RouterLink, } from 'react-router-dom';
 import TableUpdate from '../components/TableUpdate';
@@ -132,7 +132,7 @@ export default function PersistentDrawerLeft() {
       case "Edit Data":
         return <Checkout></Checkout>
       case "Alerts":
-        return <FireAlertSubmit></FireAlertSubmit>
+        return <CountyAlertSubmit></CountyAlertSubmit>
     }
   };
 
@@ -153,7 +153,7 @@ export default function PersistentDrawerLeft() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        style={{ background: 'linear-gradient(45deg, #FF2D00 30%, #FF8E53 90%)' }}
+        style={{ background: 'linear-gradient(45deg, #10AA40 30%, #1B99CA 90%)' }}
       >
         <Toolbar>
           <IconButton
@@ -171,7 +171,7 @@ export default function PersistentDrawerLeft() {
             color = "inherit"
             align = "center"
             className = {classes.typography}>
-              Fire Director Dashboard
+              COVID Director Dashboard
           </Typography>
         </Toolbar>
       </AppBar>

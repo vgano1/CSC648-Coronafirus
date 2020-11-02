@@ -1,4 +1,4 @@
- import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -11,14 +11,14 @@ import Paper from '@material-ui/core/Paper';
 import { useSelector } from 'react-redux'
 
 
-const BasicTable = () => {
+const BasicTableCovid = () => {
 
   const myCounty= useSelector(state =>({
     information: state.userReducer.information
     }));
     console.log(myCounty);
 
-  const url = 'http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/wildfire/countie/' + myCounty.information['countie'];
+  const url = 'http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/countie/' + myCounty.information['countie'];
 
   const [result, setResult] = useState([]);
 
@@ -42,14 +42,14 @@ const BasicTable = () => {
     return result.map( row => {
             return (
               <TableRow>
-                <TableCell component="th" scope="row">{row.incident_name}</TableCell>
-                <TableCell align="center">{row.incident_county}</TableCell>
-                <TableCell align="center">{row.incident_location}</TableCell>
-                <TableCell align="center">{row.incident_acres_burned}</TableCell>
-                <TableCell align="center">{row.incident_containment}</TableCell>
-                <TableCell align="center">{row.is_active}</TableCell>
-                <TableCell align="center">{row.incident_dateonly_created}</TableCell>
-                <TableCell align="center">{row.incident_dateonly_extinguished}</TableCell>
+                <TableCell component="th" scope="row">{row.Admin2}</TableCell>
+                <TableCell align="center">{row.Province_State}</TableCell>
+                <TableCell align="center">{row.Confirmed}</TableCell>
+                <TableCell align="center">{row.Deaths}</TableCell>
+                <TableCell align="center">{row.Recovered}</TableCell>
+                <TableCell align="center">{row.Active}</TableCell>
+                <TableCell align="center">{row.Incidence_Rate}</TableCell>
+                <TableCell align="center">{row["Case-Fatality_Ratio"]}</TableCell>
               </TableRow>
             )
     })
@@ -62,14 +62,14 @@ const BasicTable = () => {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell><b>Fire Name</b></TableCell>
-            <TableCell align="center"><b>County</b></TableCell>
-            <TableCell align="center"><b>Location&nbsp;</b></TableCell>
-            <TableCell align="center"><b>Acres Burned&nbsp;</b></TableCell>
-            <TableCell align="center"><b>Containment&nbsp;</b></TableCell>
+            <TableCell><b>County</b></TableCell>
+            <TableCell align="center"><b>State</b></TableCell>
+            <TableCell align="center"><b>Confirmed&nbsp;</b></TableCell>
+            <TableCell align="center"><b>Deaths&nbsp;</b></TableCell>
+            <TableCell align="center"><b>Recovered&nbsp;</b></TableCell>
             <TableCell align="center"><b>Active&nbsp;</b></TableCell>
-            <TableCell align="center"><b>Date Created&nbsp;</b></TableCell>
-            <TableCell align="center"><b>Date Extinguished&nbsp;</b></TableCell>
+            <TableCell align="center"><b>Incidence Rate&nbsp;</b></TableCell>
+            <TableCell align="center"><b>Case Fatality Ratio&nbsp;</b></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -80,4 +80,4 @@ const BasicTable = () => {
   );
 }
 
-export default BasicTable;
+export default BasicTableCovid;
