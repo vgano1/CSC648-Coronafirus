@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-//import CountyDataEdit from '../components/countyDataEdit';
+import { useSelector } from 'react-redux';
+//import CountyDataEdit from '../components/countyDataEdit'; not using atm
 
 const CountyDataEdit2 = () => {
     const [result, setResult] = React.useState({});
@@ -8,9 +9,15 @@ const CountyDataEdit2 = () => {
     const [death, setDeath]  = React.useState(0);
     const [recovered, setRecovered]  = React.useState(0);
     const [countie,setCountie] = React.useState('');
+    //user info
+    const information = useSelector(state => state.userReducer.information);
+    console.log(information);
+    //need account's county area and name
+    let countyArea = information.countie;
+    let name = information.name;
 
     const updateConfirmed= (g)=>{
-        console.log(g.target.value);
+        //console.log(g.target.value);
         setConfirmed(parseInt(g.target.value));
     };
     const updateDeath= (g)=>{
@@ -42,10 +49,7 @@ const CountyDataEdit2 = () => {
     };
 
     React.useEffect(() => {
-        //need account's county area and name
-        let countyArea;
-        let name;
-        fetch('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/director-countie-covid/?did=1')
+        fetch('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/director-countie-covid/?did='+ information.DID)
         .then(res => res.json())
         .then(resData => {
             console.log(resData[0]);
@@ -62,8 +66,8 @@ const CountyDataEdit2 = () => {
         <div>
             <div class="top-right">
                 <div>Show name and associate county/area</div>
-                <div>Name: {result.Name}</div>
-                <div>Current County: {result.Admin2}</div>
+                <div>Name: {name}</div>
+                <div>County: {countyArea}</div>
             </div>
 
             <div class = "middle">
@@ -77,9 +81,8 @@ const CountyDataEdit2 = () => {
                 {/* {console.log(result)} */}
                 
                 <div>
-                    <div>change/update data and stat WIP</div>
+                    <div>change/update data and stat</div>
                     <div>
-                        
                         <label for = "confirmed">Confirmed : </label>
                         <input type ="number" name="confirmed" value={confirmed} onChange ={updateConfirmed}></input>
     

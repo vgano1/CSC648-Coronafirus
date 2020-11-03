@@ -1,6 +1,6 @@
 import React from 'react';
 import FireAlertSubmit from '../components/fireAlertSubmit';
-import FireDataEdit2 from '../components/fireDataEdit2';
+import BasicTable from '../components/BasicTable';
 import FireMain from '../components/fireMain';
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 const FirePage = () => {
@@ -15,7 +15,7 @@ const FirePage = () => {
             <Switch>
                 <Route path = {`${path}/main`} component ={FireMain}/>
                 <Route path = {`${path}/alert`} component ={FireAlertSubmit}/>
-                <Route path = {`${path}/dataedit`} component ={FireDataEdit2}></Route>
+                <Route path = {`${path}/dataedit`} component ={BasicTable}></Route>
             </Switch>
         </div>
     );

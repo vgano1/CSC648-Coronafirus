@@ -3,9 +3,8 @@ import CountyAlertSubmit from '../components/countyAlertSubmit';
 import CountyDataEdit2 from '../components/countyDataEdit2';
 import CountyMain from '../components/countyMain';
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
-const CovidPage = ({info}) => {
+const CovidPage = () => {
     let {path, url} = useRouteMatch();
-    console.log(info);
     return (
         <div>
             <nav>
