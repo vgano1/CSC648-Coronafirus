@@ -16,16 +16,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
-import CountyAlertSubmit from '../components/countyAlertSubmit';
-import BasicTable from '../components/BasicTableCovid';
-import { Route, MemoryRouter } from 'react-router';
+import COVIDAlertSubmit from '../components/countyAlertSubmit';
+import BasicTableCovid from '../components/BasicTableCovid';
+import { MemoryRouter } from 'react-router';
 import { Link as RouterLink, } from 'react-router-dom';
-import TableUpdate from '../components/TableUpdate';
-import Checkout from '../components/FireDataUpdate/Checkout'
+import axios from 'axios';
+import { useSelector } from 'react-redux'
 
 
 const drawerWidth = 240;
@@ -123,16 +122,31 @@ export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [ whichMenu, setWhichMenu ] = React.useState("Main");
+  const [ whichMenu, setWhichMenu ] = React.useState("Edit Data");
+
+  const myCounty = useSelector(state => ({
+      information: state.userReducer.information
+  }));
+  console.log(myCounty.information)
+
+  const url = 'http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/countie/' + myCounty.information['countie'];
+  const [result, setResult] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get(url)
+    .then((res) => {
+      setResult(res.data)
+    });
+  }, [])
 
   const displayRightMenu = () => {
     switch (whichMenu) {
-      case "Main":
-        return <BasicTable></BasicTable>
       case "Edit Data":
-        return <Checkout></Checkout>
+        return <BasicTableCovid result={result}></BasicTableCovid>
       case "Alerts":
-        return <CountyAlertSubmit></CountyAlertSubmit>
+        return <COVIDAlertSubmit></COVIDAlertSubmit>
+      case "Logout":
+        
     }
   };
 
@@ -153,7 +167,8 @@ export default function PersistentDrawerLeft() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        style={{ background: 'linear-gradient(45deg, #10AA40 30%, #1B99CA 90%)' }}
+        style={{ "background": "rgb(85,214,67)",
+          "background": "linear-gradient(170deg, #55d643 0%, rgba(42,143,235,1) 100%)"}}
       >
         <Toolbar>
           <IconButton
@@ -171,7 +186,7 @@ export default function PersistentDrawerLeft() {
             color = "inherit"
             align = "center"
             className = {classes.typography}>
-              COVID Director Dashboard
+              Health Director Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -192,7 +207,6 @@ export default function PersistentDrawerLeft() {
         <Divider />        
         <Paper elevation={0}>
           <List aria-label="Fire Options">
-            <ListItemLink to="/main" primary="Main" icon={<MenuOpenIcon />} setMenu={() => setWhichMenu("Main")} />
             <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
             <ListItemLink to="/editdata" primary="Edit Data" icon={<AssignmentIcon />} setMenu={() => setWhichMenu("Edit Data")} />
           </List>

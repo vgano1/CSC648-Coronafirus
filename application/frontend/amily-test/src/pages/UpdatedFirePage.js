@@ -16,18 +16,17 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import FireAlertSubmit from '../components/fireAlertSubmit';
 import BasicTable from '../components/BasicTable';
-import { Route, MemoryRouter } from 'react-router';
-import { Link as RouterLink, } from 'react-router-dom';
-import TableUpdate from '../components/TableUpdate';
-import Checkout from '../components/FireDataUpdate/Checkout'
+import { MemoryRouter } from 'react-router';
+import { Link as RouterLink, Redirect} from 'react-router-dom';
 import axios from 'axios';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setInformation, setIsLoggedIn, setUserType } from '../redux/actions/userActions';
+
 
 
 const drawerWidth = 240;
@@ -125,12 +124,12 @@ export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [ whichMenu, setWhichMenu ] = React.useState("Main");
+  const [ whichMenu, setWhichMenu ] = React.useState("Edit Data");
+  const dispatch = useDispatch();
 
   const myCounty = useSelector(state => ({
       information: state.userReducer.information
   }));
-  console.log(myCounty);
 
   const url = 'http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/wildfire/countie/' + myCounty.information['countie'];
   const [result, setResult] = React.useState([]);
@@ -138,19 +137,22 @@ export default function PersistentDrawerLeft() {
   React.useEffect(() => {
     axios.get(url)
     .then((res) => {
-      console.log(res.data[0]);
       setResult(res.data)
     });
   }, [])
 
   const displayRightMenu = () => {
     switch (whichMenu) {
-      case "Main":
-        return <BasicTable result={result}></BasicTable>
       case "Edit Data":
-        return <Checkout></Checkout>
+        return (<BasicTable result={result}></BasicTable>);
       case "Alerts":
-        return <FireAlertSubmit></FireAlertSubmit>
+        return (<FireAlertSubmit />);
+      case "Logout":
+        dispatch(setIsLoggedIn(false));
+        dispatch(setUserType(''));
+        dispatch(setInformation({}));
+        
+        return (<Redirect to = "/login"/>);
     }
   };
 
@@ -171,7 +173,8 @@ export default function PersistentDrawerLeft() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        style={{ background: 'linear-gradient(45deg, #FF2D00 30%, #FF8E53 90%)' }}
+        style={{ "background": "rgb(176,82,246)", 
+          "background": "linear-gradient(346deg, rgba(176,82,246,1) 0%, rgba(240,85,85,1) 100%)"}}
       >
         <Toolbar>
           <IconButton
@@ -210,13 +213,12 @@ export default function PersistentDrawerLeft() {
         <Divider />        
         <Paper elevation={0}>
           <List aria-label="Fire Options">
-            <ListItemLink to="/main" primary="Main" icon={<MenuOpenIcon />} setMenu={() => setWhichMenu("Main")} />
             <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
             <ListItemLink to="/editdata" primary="Edit Data" icon={<AssignmentIcon />} setMenu={() => setWhichMenu("Edit Data")} />
           </List>
           <Divider />
           <List aria-label="Login Options">
-            <ListItemLink to="/login" primary="Logout" />
+            <ListItemLink to="/logout" primary="Logout" />
           </List>
         </Paper>
       </Drawer>

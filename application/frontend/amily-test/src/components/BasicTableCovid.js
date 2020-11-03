@@ -9,25 +9,36 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useSelector } from 'react-redux'
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
+const BasicTable = (props) => {
+  // const myCounty= useSelector(state =>({
+  //   information: state.userReducer.information
+  //   }));
+  //   console.log(myCounty);
 
-const BasicTableCovid = () => {
+  // const url = 'http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/wildfire/countie/' + myCounty.information['countie'];
 
-  const myCounty= useSelector(state =>({
-    information: state.userReducer.information
+  // const [result, setResult] = useState([]);
+    const myCounty = useSelector(state => ({
+      information: state.userReducer.information
     }));
-    console.log(myCounty);
+    const information = useSelector(state => state.userReducer.information); //for comparison, the original wayyyy
 
-  const url = 'http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/countie/' + myCounty.information['countie'];
-
-  const [result, setResult] = useState([]);
+  const [confirmed, setConfirmed] = React.useState({});
+  const [recovered, setRecovered] = React.useState({});
+  const [death, setDeath] =  React.useState({});
 
   useEffect(() => {
-    axios.get(url)
-    .then((res) => {
-      console.log(res.data[0]);
-      setResult(res.data)
-    });
+    let newConfirmed = confirmed;
+    let newRecovered = recovered;
+    let newDeaths = death
+
+    setConfirmed(newConfirmed);
+    setDeath(newDeaths);
+    setRecovered(newRecovered);
   }, [])
 
   const useStyles = makeStyles({
@@ -36,22 +47,63 @@ const BasicTableCovid = () => {
     },
   });
 
-  
+  // const initArray = () => {
+  //   let newAcres = acres;
+  //   for (let i = 0; i < props.result.length; i++) {
+  //     newAcres[i] = props.result[i].incident_acres_burned;
+  //   }
+  //   setAcres(newAcres);
+  // }
+
+  const updateData = () => {
+    axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/update-covid/', {
+      "countie": myCounty.information['countie'],
+      "confirmed": confirmed,
+      "death": death,
+      "recovered": recovered
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  const handleChangeConfirmed = (event) => {
+    let newConfirmed = confirmed;
+    newConfirmed = parseInt(event.target.value);
+    setConfirmed(newConfirmed);
+  };
+  const handleChangeDeaths = (event) => {
+    let newDeaths = death;
+    newDeaths = parseInt(event.target.value);
+    setDeath(newDeaths);
+    console.log(death);
+  };
+  const handleChangeRecovered = (event) => {
+    let newRecovered = recovered;
+    newRecovered = parseInt(event.target.value);
+    setRecovered(newRecovered);
+    console.log(recovered);
+  };
 
   const renderTable = () => {
-    return result.map( row => {
-            return (
-              <TableRow>
-                <TableCell component="th" scope="row">{row.Admin2}</TableCell>
-                <TableCell align="center">{row.Province_State}</TableCell>
-                <TableCell align="center">{row.Confirmed}</TableCell>
-                <TableCell align="center">{row.Deaths}</TableCell>
-                <TableCell align="center">{row.Recovered}</TableCell>
-                <TableCell align="center">{row.Active}</TableCell>
-                <TableCell align="center">{row.Incidence_Rate}</TableCell>
-                <TableCell align="center">{row["Case-Fatality_Ratio"]}</TableCell>
-              </TableRow>
-            )
+    return props.result.map( (row) => {
+      return (
+        <TableRow>
+          <TableCell component="th" scope="row">{row.Admin2}</TableCell>
+          <TableCell align="center">{row.Province_State}</TableCell>
+          <TableCell align="center">{row.Country_Region}</TableCell>
+          <TextField size="10" required id="standard-required" label="Required" defaultValue={row.Confirmed} onChange={(e) => handleChangeConfirmed(e)}/>
+          <TextField required id="standard-required" label="Required" defaultValue={row.Deaths} onChange={(e) => handleChangeDeaths(e)}/>
+          <TextField size='medium' required id="standard-required" label="Required" defaultValue={row.Recovered} onChange={(e) => handleChangeRecovered(e)}/>
+          <TableCell align="center">{row.Active}</TableCell>
+          <TableCell align="center">{row.Incidence_Rate}</TableCell>
+          <TableCell align="center">{row["Case-Fatality_Ratio"]}</TableCell>
+          <Button variant="contained" onClick={() => updateData()}>Update</Button>
+        </TableRow>
+      )
     })
   }
 
@@ -64,12 +116,14 @@ const BasicTableCovid = () => {
           <TableRow>
             <TableCell><b>County</b></TableCell>
             <TableCell align="center"><b>State</b></TableCell>
+            <TableCell align="center"><b>Country&nbsp;</b></TableCell>
             <TableCell align="center"><b>Confirmed&nbsp;</b></TableCell>
             <TableCell align="center"><b>Deaths&nbsp;</b></TableCell>
             <TableCell align="center"><b>Recovered&nbsp;</b></TableCell>
             <TableCell align="center"><b>Active&nbsp;</b></TableCell>
             <TableCell align="center"><b>Incidence Rate&nbsp;</b></TableCell>
             <TableCell align="center"><b>Case Fatality Ratio&nbsp;</b></TableCell>
+            <TableCell align="center"><b>Upload&nbsp;</b></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -80,4 +134,4 @@ const BasicTableCovid = () => {
   );
 }
 
-export default BasicTableCovid;
+export default BasicTable;
