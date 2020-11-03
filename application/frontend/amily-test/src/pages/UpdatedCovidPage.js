@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import COVIDAlertSubmit from '../components/countyAlertSubmit';
 import BasicTableCovid from '../components/BasicTableCovid';
 import { MemoryRouter } from 'react-router';
-import { Link as RouterLink, } from 'react-router-dom';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux'
 
@@ -146,7 +146,7 @@ export default function PersistentDrawerLeft() {
       case "Alerts":
         return <COVIDAlertSubmit></COVIDAlertSubmit>
       case "Logout":
-        
+        return (<Redirect to = "/login"/>);
     }
   };
 
@@ -212,7 +212,7 @@ export default function PersistentDrawerLeft() {
           </List>
           <Divider />
           <List aria-label="Login Options">
-            <ListItemLink to="/login" primary="Logout" />
+            <ListItemLink to="/login" primary="Logout" setMenu={() => setWhichMenu("Logout")} />
           </List>
         </Paper>
       </Drawer>

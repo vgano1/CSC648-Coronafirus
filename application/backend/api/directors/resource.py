@@ -138,7 +138,7 @@ class UpdateCovid(Resource):
         for elem in params:
             parser.add_argument(elem)
         args = parser.parse_args()
-        Confirmed, Death, Recovered, Countie = [x for x in args.values()]
+        Confirmed, Death, Recovered, Countie = (args['confirmed'], args['death'], args['recovered'], args['countie'])
         try:
             int(Confirmed)
             int(Death)
