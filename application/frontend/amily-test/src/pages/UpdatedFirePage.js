@@ -26,6 +26,8 @@ import { Route, MemoryRouter } from 'react-router';
 import { Link as RouterLink, } from 'react-router-dom';
 import TableUpdate from '../components/TableUpdate';
 import Checkout from '../components/FireDataUpdate/Checkout'
+import axios from 'axios';
+import { useSelector } from 'react-redux'
 
 
 const drawerWidth = 240;
@@ -125,10 +127,26 @@ export default function PersistentDrawerLeft() {
   const [open, setOpen] = React.useState(false);
   const [ whichMenu, setWhichMenu ] = React.useState("Main");
 
+  const myCounty = useSelector(state => ({
+      information: state.userReducer.information
+  }));
+  console.log(myCounty);
+
+  const url = 'http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/wildfire/countie/' + myCounty.information['countie'];
+  const [result, setResult] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get(url)
+    .then((res) => {
+      console.log(res.data[0]);
+      setResult(res.data)
+    });
+  }, [])
+
   const displayRightMenu = () => {
     switch (whichMenu) {
       case "Main":
-        return <BasicTable></BasicTable>
+        return <BasicTable result={result}></BasicTable>
       case "Edit Data":
         return <Checkout></Checkout>
       case "Alerts":
