@@ -1,7 +1,7 @@
 import React from 'react';
 import { GoogleMap, LoadScript, Marker, KmlLayer, Data } from '@react-google-maps/api';
-import mapData from '../CAcounties.json';
-import mapTheme from './mapTheme.json';
+import mapData from '../data/CAcounties.json';
+import mapTheme from '../styles/mapTheme.json';
  
 const containerStyle = {
     width: '100%',

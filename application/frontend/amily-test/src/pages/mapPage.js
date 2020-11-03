@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Switch, Route, Link } from 'react-router-dom';
-import './template.css';
-import './style.css';
-import ToggleSwitch from './ToggleSwitch';
+import '../styles/frontendTemplate.css';
+import '../styles/listStyle.css';
+import ToggleSwitch from '../components/ToggleSwitch.js';
 import MapView from '../components/MapView.js';
 import DataView from '../components/DataView.js';
-import Secret from '../Secrets';
+import Secret from '../data/Secrets';
 
-//debug
-import defaultFire from '../testData/testData.json'
-
-function FrontEndTemplate() {
+function MapPage() {
     const [results, setResults] = React.useState(null);
     const [mode, setMode] = React.useState(true); // true for Wildfire, false for Covid
     const [selected, setSelected] = React.useState(null);
@@ -24,7 +21,7 @@ function FrontEndTemplate() {
 
     React.useEffect(() => {
       if(selected) {
-        filterFunction(selected)
+        filterFunction(selected);
       }
     }, [mode]);
 
@@ -63,7 +60,7 @@ function FrontEndTemplate() {
     }
 
     return (
-      <>
+      <div className="container">
       <div className={mode ? 'background' : 'background fade'} />
         <div className="wrapper foreground">
             <div className="main-head foreground">
@@ -78,8 +75,8 @@ function FrontEndTemplate() {
             </div>
             <div className="main-footer foreground">SFSU Software Engineering Project CSC 648-848, Fall 2020. For Demonstration Only</div>
         </div>
-      </>
+      </div>
     );
 }
 
-export default FrontEndTemplate;
+export default MapPage;
