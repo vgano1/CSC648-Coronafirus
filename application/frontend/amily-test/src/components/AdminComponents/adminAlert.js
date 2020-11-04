@@ -22,11 +22,12 @@ const AdminAlert = () => {
         });
     }, []);
     
-    const approve = (props) => {
+    const approve = (alertID, approved) => {
+        console.log(alertID, approved);
         let data = {
-            'aid': information['aid'],
-            'alertID': props.alertID,
-            'approve': props.approved,
+            'aid': information['AID'],
+            'alertID': alertID,
+            'approve': approved,
         };
         axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/send-alert/', data)
         .then((res) => {
@@ -47,8 +48,8 @@ const AdminAlert = () => {
                 return (
                 <div key={i}>
                     {row.alert_type + " | " + row.County + " | " + row.message + " | " + row.Dates}
-                    <Button onClick={approve} variant="contained" alertID = {row.alert_id} alertType = {row.alert_type} message = { row.message} approved={true} >Approve</Button>
-                    <Button onClick={approve} variant="contained" alertID = {row.alert_id} alertType = {row.alert_type} message = { row.message} approved={false}>Disapprove</Button>
+                    <Button onClick={() => {approve(row.alert_id, true)}} variant="contained" >Approve</Button>
+                    <Button onClick={() => {approve(row.alert_id, false)}} variant="contained">Disapprove</Button>
                 </div>
             )})}
         </div>
