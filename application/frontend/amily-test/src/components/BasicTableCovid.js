@@ -27,15 +27,14 @@ const BasicTable = (props) => {
     }));
     const information = useSelector(state => state.userReducer.information); //for comparison, the original wayyyy
 
-  const [confirmed, setConfirmed] = React.useState({});
-  const [recovered, setRecovered] = React.useState({});
-  const [death, setDeath] =  React.useState({});
+  const [confirmed, setConfirmed] = React.useState(0);
+  const [recovered, setRecovered] = React.useState(0);
+  const [death, setDeath] =  React.useState(0);
 
   useEffect(() => {
-    let newConfirmed = confirmed;
-    let newRecovered = recovered;
-    let newDeaths = death
-
+    let newConfirmed = props.result[0].Confirmed;
+    let newRecovered = props.result[0].Deaths;
+    let newDeaths = props.result[0].Recovered;
     setConfirmed(newConfirmed);
     setDeath(newDeaths);
     setRecovered(newRecovered);
@@ -47,20 +46,12 @@ const BasicTable = (props) => {
     },
   });
 
-  // const initArray = () => {
-  //   let newAcres = acres;
-  //   for (let i = 0; i < props.result.length; i++) {
-  //     newAcres[i] = props.result[i].incident_acres_burned;
-  //   }
-  //   setAcres(newAcres);
-  // }
-
   const updateData = () => {
     axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/update-covid/', {
-      "countie": myCounty.information['countie'],
       "confirmed": confirmed,
       "death": death,
-      "recovered": recovered
+      "recovered": recovered,
+      "countie": myCounty.information['countie']
     })
     .then(function (response) {
       console.log(response);
@@ -95,9 +86,9 @@ const BasicTable = (props) => {
           <TableCell component="th" scope="row">{row.Admin2}</TableCell>
           <TableCell align="center">{row.Province_State}</TableCell>
           <TableCell align="center">{row.Country_Region}</TableCell>
-          <TextField size="10" required id="standard-required" label="Required" defaultValue={row.Confirmed} onChange={(e) => handleChangeConfirmed(e)}/>
-          <TextField required id="standard-required" label="Required" defaultValue={row.Deaths} onChange={(e) => handleChangeDeaths(e)}/>
-          <TextField size='medium' required id="standard-required" label="Required" defaultValue={row.Recovered} onChange={(e) => handleChangeRecovered(e)}/>
+          <TableCell align="center"><TextField required id="standard-required" label="Required" defaultValue={row.Confirmed} onChange={(e) => handleChangeConfirmed(e)}/></TableCell>
+          <TableCell align="center"><TextField required id="standard-required" label="Required" defaultValue={row.Deaths} onChange={(e) => handleChangeDeaths(e)}/></TableCell>
+          <TableCell align="center"><TextField required id="standard-required" label="Required" defaultValue={row.Recovered} onChange={(e) => handleChangeRecovered(e)}/></TableCell>
           <TableCell align="center">{row.Active}</TableCell>
           <TableCell align="center">{row.Incidence_Rate}</TableCell>
           <TableCell align="center">{row["Case-Fatality_Ratio"]}</TableCell>
