@@ -16,6 +16,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 import { Redirect } from "react-router-dom";
+import { Link as LLink } from "react-router-dom";
 
 const axios = require('axios');
 
@@ -156,6 +157,7 @@ export default function SignUp() {
             Receive alerts
           </Button>
         </form>
+        <LLink to="/login">Are you an Administrator or Director?</LLink>
       </div>
       <Box mt={5}>
         <Copyright />

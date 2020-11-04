@@ -15,19 +15,18 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
-import CountyAlertSubmit from '../components/countyAlertSubmit';
-import BasicTable from '../components/BasicTableCovid';
-import { Route, MemoryRouter } from 'react-router';
-import { Link as RouterLink, } from 'react-router-dom';
-import TableUpdate from '../components/TableUpdate';
-import Checkout from '../components/FireDataUpdate/Checkout'
-import Dashboard from '../components/Dashboard';
-import {PostCreate, PostEdit, PostList} from "../components/posts";
+import AdminAlert from '../components/AdminComponents/adminAlert';
+import AdminDataEdit from '../components/AdminComponents/adminDataEdit';
+import { MemoryRouter } from 'react-router';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
+import axios from 'axios';
+import { useSelector } from 'react-redux'
+import HealingIcon from '@material-ui/icons/Healing';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+
 
 const drawerWidth = 240;
 
@@ -39,15 +38,7 @@ function ListItemLink(props) {
       () => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
       [to],
     );
-
-    function AdminApp() {
-      return (
-          <Admin dashboard={Dashboard} dataProvider={dataProvider}>
-              <Resource name="posts" list={PostList} edit={PostEdit} create={PostCreate} icon={PostAddIcon}/>
-          </Admin>
-      );
-  }
-
+  
     return (
       <li>
         <ListItem button component={renderLink} onClick={() => setMenu()}>
@@ -132,16 +123,21 @@ export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [ whichMenu, setWhichMenu ] = React.useState("Main");
+  const [ whichMenu, setWhichMenu ] = React.useState("Alerts");
+
+  const myCounty = useSelector(state => ({
+      information: state.userReducer.information
+  }));
+  console.log(myCounty.information)
 
   const displayRightMenu = () => {
     switch (whichMenu) {
-      case "Main":
-        return <BasicTable></BasicTable>
-      case "Edit Data":
-        return <Checkout></Checkout>
       case "Alerts":
-        return <CountyAlertSubmit></CountyAlertSubmit>
+        return <AdminAlert></AdminAlert>
+      case "Data Edit":
+        return <AdminDataEdit></AdminDataEdit>
+      case "Logout":
+        return 
     }
   };
 
@@ -154,7 +150,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <MemoryRouter initialEntries = {['/Fire']} initialIndex ={0}>
+    <MemoryRouter initialEntries = {['/Admin']} initialIndex ={0}>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -162,7 +158,8 @@ export default function PersistentDrawerLeft() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        style={{ background: 'linear-gradient(45deg, #10AA40 30%, #1B99CA 90%)' }}
+        style={{ "background": "rgb(85,214,67)",
+          "background": "linear-gradient(170deg, #55d643 0%, #FF0F00 100%)"}}
       >
         <Toolbar>
           <IconButton
@@ -180,7 +177,7 @@ export default function PersistentDrawerLeft() {
             color = "inherit"
             align = "center"
             className = {classes.typography}>
-              COVID Director Dashboard
+              Admin Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -198,16 +195,15 @@ export default function PersistentDrawerLeft() {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
-        <Divider />        
+        <Divider />
         <Paper elevation={0}>
-          <List aria-label="Fire Options">
-            <ListItemLink to="/main" primary="Main" icon={<MenuOpenIcon />} setMenu={() => setWhichMenu("Main")} />
+          <List aria-label="Admin Options">
             <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
-            <ListItemLink to="/editdata" primary="Edit Data" icon={<AssignmentIcon />} setMenu={() => setWhichMenu("Edit Data")} />
+            <ListItemLink to="/dataedit" primary="Data Edit" icon={<WhatshotIcon />} setMenu={() => setWhichMenu("Data Edit")} />
           </List>
           <Divider />
           <List aria-label="Login Options">
-            <ListItemLink to="/login" primary="Logout" />
+            <ListItemLink to="/login" primary="Logout" setMenu={() => setWhichMenu("Logout")} />
           </List>
         </Paper>
       </Drawer>

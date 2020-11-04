@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Switch, Route, Link, Redirect } from 'react-router-dom';
+import { Route, Link, Redirect } from 'react-router-dom';
 import '../styles/frontendTemplate.css';
 import '../styles/listStyle.css';
-import ToggleSwitch from '../components/ToggleSwitch.js';
 import MapView from '../components/MapView.js';
 import DataView from '../components/DataView.js';
 import Secret from '../data/Secrets';
+import Switch from '@material-ui/core/Switch';
+
 
 function MapPage() {
     const [results, setResults] = React.useState(null);
     const [mode, setMode] = React.useState(true); // true for Wildfire, false for Covid
     const [selected, setSelected] = React.useState(null);
     const [redirect,setRedirect] = React.useState(false);
+    const [path, setPath] = React.useState("");
 
     React.useEffect(() => {
       if(selected) {
@@ -26,8 +28,8 @@ function MapPage() {
       }
     }, [mode]);
 
-    const checkbox = () => {
-      setMode(!mode);
+    const checkbox = (event) => {
+      setMode(event.target.checked);
     }
 
     const routeChange = () => {
@@ -71,7 +73,13 @@ function MapPage() {
           <div className="wrapper foreground">
               <div className="main-head foreground">
                 <h2>Coronafirus</h2>
-                <ToggleSwitch id="toggleSwitch" checked={mode} onChange={checkbox} />
+                <Switch
+                  style={{ float: "right" }}
+                  checked={mode}
+                  onChange={checkbox}
+                  name="checkedA"
+                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                />
                 <button className="signUp" onClick={routeChange}>Sign Up</button>
               </div>
               <div className="map foreground">
@@ -85,8 +93,8 @@ function MapPage() {
         </div>
       </div>
     );
-  }else{
-    return (<Redirect to = "/signup"/>);
+  } else {
+      return (<Redirect to = "/signup" />);
   }
 
 // here

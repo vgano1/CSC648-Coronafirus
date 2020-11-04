@@ -159,7 +159,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <MemoryRouter initialEntries = {['/Fire']} initialIndex ={0}>
+    <MemoryRouter initialEntries = {['/Covid']} initialIndex ={0}>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -206,7 +206,7 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider />
         <Paper elevation={0}>
-          <List aria-label="Fire Options">
+          <List aria-label="Health Options">
             <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
             <ListItemLink to="/editdata" primary="Edit Data" icon={<AssignmentIcon />} setMenu={() => setWhichMenu("Edit Data")} />
           </List>

@@ -31,14 +31,14 @@ const BasicTable = (props) => {
   const [recovered, setRecovered] = React.useState(0);
   const [death, setDeath] =  React.useState(0);
 
-  useEffect(() => {
-    let newConfirmed = props.result[0].Confirmed;
-    let newRecovered = props.result[0].Deaths;
-    let newDeaths = props.result[0].Recovered;
-    setConfirmed(newConfirmed);
-    setDeath(newDeaths);
-    setRecovered(newRecovered);
-  }, [])
+  // useEffect(() => {
+  //   let newConfirmed = props.result[0].Confirmed;
+  //   let newRecovered = props.result[0].Deaths;
+  //   let newDeaths = props.result[0].Recovered;
+  //   setConfirmed(newConfirmed);
+  //   setDeath(newDeaths);
+  //   setRecovered(newRecovered);
+  // }, [])
 
   const useStyles = makeStyles({
     table: {
