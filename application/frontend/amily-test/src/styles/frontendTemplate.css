@@ -2,7 +2,7 @@ body .container {
   color: white;
   
   background: rgb(85,214,67);
-  background: linear-gradient(170deg, rgba(85,214,67,1) 0%, rgba(42,143,235,1) 100%);
+  background: linear-gradient(170deg, #55d643 0%, rgba(42,143,235,1) 100%);
   z-index: 0;
 }
 
@@ -30,8 +30,22 @@ body {
 .fade {
   opacity: 0;
 }
+
 .foreground {
   z-index: 2;
+}
+
+.signUp {
+  padding: 1em 2em;
+  transition-duration: 0.25s;
+  border-radius: 5px;
+  background: grey;
+  position: static;
+  float: right;
+}
+
+.signUp:hover {
+  background: linear-gradient(346deg, rgba(176,82,246,1) 0%, rgba(240,85,85,1) 100%);
 }
 
 .wrapper { 

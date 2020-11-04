@@ -1,68 +1,160 @@
-import axios from 'axios';
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
+const axios = require('axios');
+
 const CountyAlertSubmit = () => {
-    //county info
+
+
+    // const useStyles = makeStyles((theme) => ({
+    //     paper: {
+    //       marginTop: theme.spacing(8),
+    //       display: 'flex',
+    //       flexDirection: 'column',
+    //       alignItems: 'center',
+    //     },
+    //     avatar: {
+    //       margin: theme.spacing(1),
+    //       backgroundColor: theme.palette.secondary.main,
+    //     },
+    //     form: {
+    //       width: '100%', // Fix IE 11 issue.
+    //       marginTop: theme.spacing(3),
+    //     },
+    //     submit: {
+    //       margin: theme.spacing(3, 0, 2),
+    //     },
+    //   }));
+
+    // const useStyles = makeStyles((theme) => ({
+    //     root: {
+    //       flexGrow: 2,
+    //     },
+    //     textfield: {
+    //     //   padding: theme.spacing(2),
+    //       textAlign: 'center',
+    //       color: theme.palette.text.secondary,
+    //     },
+    //   }));
+
+    const useStyles = makeStyles((theme) => ({
+        paper: {
+          marginTop: theme.spacing(8),
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        },
+        avatar: {
+          margin: theme.spacing(3),
+          backgroundColor: "#ff642f",
+        },
+        form: {
+          width: '100%', // Fix IE 11 issue.
+          marginTop: theme.spacing(3),
+        },
+        submit: {
+          margin: theme.spacing(3, 0, 2),
+        },
+      }));
+
+    const classes = useStyles();
+
     const [result, setResult] = React.useState({});
-    //info to post/send
-    const [shelterInfo,setShelterInfo] = React.useState('');
-    //user info
     const information  = useSelector(state =>state.userReducer.information);
-    console.log(information);
-    let countyArea = information.countie;
-    let name = information.name;
-    let did = information.DID;
+    const [ message, setMessage ] = React.useState('');
+    const [success, setSuccess] = React.useState(false);
+    const [error, setError] = React.useState(false);
 
-    React.useEffect(() => {
+    const handleChangeDescription = (event) => {
+        setMessage(event.target.value);
+      };
 
-        fetch('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/countie/'+ countyArea)
-        .then(res => res.json())
-        .then(resData => {
-            console.log(resData);
-            setResult(resData[0]);
-        })
-        .catch((e) => {
-            console.log(e);
-        });
+      const handleSendAlert = () => {
+        console.log(information['DID'])
+        console.log(message)
 
-    }, []);
+        axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/create-alert/', {
+            "did": information['DID'],
+            "message": message
+          })
+          .then(function (result) {
+            console.log(result);
+            setSuccess(true);
+            setError(false);
+          })
+          .catch(function (error) {
+            console.log(error);
+            setSuccess(false);
+            setError(true);
+          });
+      };
 
-    const updateShelterInfo = (g) => {
-        console.log(g.target.value);
-        setShelterInfo(g.target.value);
+        return (
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <NotificationImportantIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Create alerts
+              </Typography>
+              <form className={classes.form} noValidate>
+                <Grid
+                container
+                spacing={2}
+                justify = "center"
+                >
+                  <Grid item align="center">
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Description of the alert"
+                        multiline
+                        rows={6}
+                        variant="outlined"
+                        onChange={handleChangeDescription}
+                    />
+                  </Grid>
+                  {success ? 
+                <Grid item align="center">
+                    <Alert severity="success"
+                    align="center"
+                    >
+                        <AlertTitle>Success</AlertTitle>
+                        <strong>Your alert has been sent</strong>
+                    </Alert>
+                </Grid>
+            : null}
+              {error ?
+                <Grid item align="center">
+                    <Alert severity="error"
+                    align="center"
+                    >
+                        <AlertTitle>Error</AlertTitle>
+                        <strong>Your alert didn't get sent</strong>
+                    </Alert>
+                </Grid>
+            : null}
+                </Grid>
+                <Grid item align="center">
+                    <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    align="center"
+                    flexDirection='column'
+                    onClick={handleSendAlert}
+                    >
+                    Send alerts
+                    </Button>
+                </Grid>
+              </form>
+          </div>
+        );
     }
-    const submit1 = () =>{
-        const data = {
-            'did': did,
-            'message': shelterInfo
-        };
-        console.log(data);
-        axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/create-alert/', data)
-        .then((res)=>{
-            console.log(res);
-        })
-        .catch((e)=>{
-            console.log(e);
-        });
-    }
-
-    return (
-        <div>
-            <div class="top-right">
-                <div>Show name and associate county/area</div>
-                <div> Name : {name}</div>
-                <div>County : {countyArea}</div>
-            </div>
-            <div class="middle">
-                <div className="form-alert-submit">
-                    
-                    <label for="info">Field for info and instructions for shelter in place</label>
-                    <textarea id="info"cols="50" rows="10" onChange = {updateShelterInfo}></textarea>
-
-                    <input type="submit" onClick = {submit1}></input>
-                </div>
-            </div>
-        </div>
-    );
-}
 export default CountyAlertSubmit;
