@@ -32,7 +32,7 @@ const AdminAlert = () => {
         axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/send-alert/', data)
         .then((res) => {
             console.log(res) // !!!
-            // data = res.data; // :)
+            // data = res.data; //
         })
         .catch((e)=> {
             console.log(e) // !!!

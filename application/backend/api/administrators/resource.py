@@ -99,6 +99,72 @@ class ApproveFire(Resource):
         else:
             return Response("Update failed", status=500)
 
+class FireUpdates(Resource):
+
+    def administratorExist(self, aid):
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from Administrators where AID = %s
+            """, (aid)
+        )
+        return True if cur.rowcount > 0 else False
+
+    def get(self):
+        parser.add_argument('aid')
+        args = parser.parse_args()
+        if self.administratorExist(args['aid']) == False:
+            return Response("Administrators does not exist", 400)
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from fire_update where Update_id not in (
+	            Select Update_id from Administrator_approved_covid_update
+            );
+            """
+        )
+        data = cur.fetchall()
+        row_headers=[x[0] for x in cur.description]
+        json_data=[]
+        for result in data:
+            json_data.append(dict(zip(row_headers,result)))
+        cur.close()
+        df = pd.DataFrame(json_data)
+        return Response(df.to_json(orient="records"), mimetype='application/json')
+
+class CovidAlerts(Resource):
+
+    def administratorExist(self, aid):
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from Administrators where AID = %s
+            """, (aid)
+        )
+        return True if cur.rowcount > 0 else False
+
+    def get(self):
+        parser.add_argument('aid')
+        args = parser.parse_args()
+        if self.administratorExist(args['aid']) == False:
+            return Response("Administrators does not exist", 400)
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from fire_update where Update_id not in (
+	            Select Update_id from Administrator_approved_covid_update
+            );
+            """
+        )
+        data = cur.fetchall()
+        row_headers=[x[0] for x in cur.description]
+        json_data=[]
+        for result in data:
+            json_data.append(dict(zip(row_headers,result)))
+        cur.close()
+        df = pd.DataFrame(json_data)
+        return Response(df.to_json(orient="records"), mimetype='application/json')
+
 class CovidUpdates(Resource):
 
     def administratorExist(self, aid):
@@ -161,9 +227,34 @@ class AdministratorLogin(Resource):
         df = pd.DataFrame(json_data)
         return Response(df.to_json(orient="records"), mimetype='application/json')
 
-class SendCovidAlert(Resource):
+class GetAlerts(Resource):
+    def get(self):
+        parser.add_argument('aid')
+        aid = parser.parse_args()['aid']
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * 
+            from Alert Al
+            where Al.alert_id not in (
+                Select A.alert_id
+                from Administrators_retrieve_alert A
+            );
+            """
+        )
+        data = cur.fetchall()
+        row_headers=[x[0] for x in cur.description]
+        json_data=[]
+        for result in data:
+            json_data.append(dict(zip(row_headers,result)))
+        cur.close()
+        df = pd.DataFrame(json_data)
+        return Response(df.to_json(orient="records"), mimetype='application/json')
 
-    def getAlert(self):
+
+class SendAlert(Resource):
+
+    def getAllAlerts(self):
         cur = db.connection.cursor()
         cur.execute(
             """
@@ -206,18 +297,32 @@ class SendCovidAlert(Resource):
         msg.body = message
         mail.send(msg)
 
+    def confirmAlert(self, alertID, aid):
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            INSERT INTO Administrators_retrieve_alert (alert_id, AID)
+            VALUES (%s, %s);
+            """, (alertID, aid)
+        )
+        db.connection.commit()
+
     def post(self):
-        arguments = ['aid', 'alertID']
+        arguments = ['aid', 'alertID', 'approve']
         for argument in arguments:
             parser.add_argument(argument)
         args = parser.parse_args()
-        aid, alertID = [args[x] for x in args]
+        aid, alertID, approve = (args['aid'], args['alertID'], args['approve'])
+        print(self.getAlert(alertID)[0])
         alert = self.getAlert(alertID)[0]
+        print(alertID, aid, approve)
+        self.confirmAlert(alertID, aid)
         print(alert)
-        emails = self.getUsersMailByCountie(alert[1])
-        for elem in emails:
-            self.send_mail(elem[0], "Covid Alert", alert[0])
-        return Response("Alert sent", 200)
+        if (approve == True):
+            emails = self.getUsersMailByCountie(alert[1])
+            for elem in emails:
+                self.send_mail(elem[0], "Covid Alert", alert[0])
+        return Response("OK", 200)
 
 # class SendMail(Resource):
 #     def send_mail(self, receiver, mailObject, message):

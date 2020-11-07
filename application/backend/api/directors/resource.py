@@ -228,81 +228,10 @@ class AskCovidAlert(Resource):
         for argument in arguments:
             parser.add_argument(argument)
         args = parser.parse_args()
-        did, message = [args[x] for x in args]
+        did, message = (args['did'], args['message'])
         director = self.directorData(did)
         dt_string = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
         alertID = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
         self.createCovidAlert(dt_string, alertID, director[0], director[1], message)
         self.askForCovidAlert(alertID, did)
         return Response("Alert created", 200)
-
-# class SendCovidAlert(Resource):
-
-#     def getUsersMailByCountie(self, countie):
-#         cur = db.connection.cursor()
-#         cur.execute(
-#             """
-#             Select Mail from users where countie = %s
-#             """, (countie,)
-#         )
-#         data = cur.fetchall()
-#         return data
-    
-#     def send_mail(self, receiver, mailObject, message):
-#         mail = Mail()
-#         msg = Message(mailObject, sender='coronafirus@no-reply.com', recipients=[receiver])
-#         msg.body = message
-#         mail.send(msg)
-
-#     def post(self):
-#         parser.add_argument('aid')
-#         parser.add_argument('countie')
-#         parser.add_argument('alertID')
-#         countie = parser.parse_args()['countie']
-#         cur = db.connection.cursor()
-#         emails = self.getUsersMailByCountie(countie)
-#         for elem in emails:
-#             self.send_mail(elem, "Covid Alert", )
-#         return Response("User created", 200)
-
-# class AskSendMail(Resource):
-#     def directorExist(self, did):
-#         cur = db.connection.cursor()
-#         cur.execute(
-#             """
-#             Select * from directors where DID = %s
-#             """, (did)
-#         )
-#         return True if cur.rowcount > 0 else False
-
-#     def getDirectorCountieAndDepartment(self, did):
-#         cur = db.connection.cursor()
-#         cur.execute(
-#             """
-#             Select department, countie from directors where DID = %s
-#             """, (did)
-#         )
-#         data = cur.fetchall()
-#         return data[0]
-
-#     def post(self):
-#         parser.add_argument('did')
-#         parser.add_argument('shelter')
-#         parser.add_argument('description')
-#         dt_string = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-#         did, shelter, description = parser.parse_args()['did'], parser.parse_args()['shelter'], parser.parse_args()['description']
-#         if (not self.directorExist(did)):
-#             return Response("Director does not exist", 500)
-#         randomID = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
-#         cur = db.connection.cursor()
-#         cur.execute(
-#             """
-#                 INSERT INTO Alert (Update_id, incident_acres_burned, fire_name)
-#                 VALUES (%s, %s, %s);
-#             """, (dt_string, randomID, fireName)
-#         )
-#         db.connection.commit()
-#         if cur.rowcount > 0:
-#             return Response("Record Sucessfully inserted", status=200)
-#         else:
-#             return Response("Insertion failed", status=500)
