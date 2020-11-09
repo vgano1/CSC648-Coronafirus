@@ -83,7 +83,7 @@ function MapPage() {
                 <button className="signUp" onClick={routeChange}>Sign Up</button>
               </div>
               <div className="map foreground">
-                  <MapView mapsSecret={Secret.GoogleMaps.ApiKey} filterFunction={filterFunction} mode={mode} setSelected={setSelected}/>
+                  <MapView mapsSecret={Secret.GoogleMaps.ApiKey} selectedCounty={setSelected}/>
               </div>
               <div className="side foreground">
                   <DataView results={results} mode={mode}/>
