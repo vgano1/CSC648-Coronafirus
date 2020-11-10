@@ -230,9 +230,9 @@ class AdministratorLogin(Resource):
 class GetAlerts(Resource):
     def get(self):
         parser.add_argument('aid')
-        aid = parser.parse_args()['aid']
+        aid = parser.parse_args()['aid'] # getting the administrator ID
         cur = db.connection.cursor()
-        cur.execute(
+        cur.execute( # Getting all alerts that did not get approve
             """
             Select * 
             from Alert Al
@@ -243,10 +243,10 @@ class GetAlerts(Resource):
             """
         )
         data = cur.fetchall()
-        row_headers=[x[0] for x in cur.description]
-        json_data=[]
-        for result in data:
-            json_data.append(dict(zip(row_headers,result)))
+        row_headers = [x[0] for x in cur.description]
+        json_data = []
+        for result in data: # Creating the JSON that will contains all the alerts
+            json_data.append(dict(zip(row_headers, result)))
         cur.close()
         df = pd.DataFrame(json_data)
         return Response(df.to_json(orient="records"), mimetype='application/json')
