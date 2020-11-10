@@ -112,6 +112,9 @@ body {
       height: 45vh;
     }
     .side {
-      height: 45vh;
+      height: 40vh;
+    }
+    .main-footer {
+      height: 5vh;
     }
   }

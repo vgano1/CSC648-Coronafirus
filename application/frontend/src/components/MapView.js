@@ -28,7 +28,7 @@ const hoverStyle = {
     zIndex: 2
 }
    
-const MapView = ({mapsSecret, filterFunction, m, setSelected}) => {
+const MapView = ({mapsSecret, selectedCounty}) => {
     const [map, setMap] = React.useState(null);
  
 const onLoad = React.useCallback(function callback(map) {
@@ -59,7 +59,7 @@ const onLoad = React.useCallback(function callback(map) {
         });
         map.data.addListener('click', (event) => {
             // On Click
-            setSelected(event.feature.j.NAME);
+            selectedCounty(event.feature.j.NAME);
         });
         
         //setMap(map)
