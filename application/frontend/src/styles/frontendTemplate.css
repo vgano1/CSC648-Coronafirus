@@ -76,7 +76,10 @@ body {
     }
   .main-footer {
     grid-area: footer;
-
+    bottom: 0;
+    position: absolute;
+    height: 6vh;
+    width: 100vw;
     background: rgb(42, 42, 42);
     }
   .map { 
@@ -116,5 +119,6 @@ body {
     }
     .main-footer {
       height: 5vh;
+      
     }
   }
