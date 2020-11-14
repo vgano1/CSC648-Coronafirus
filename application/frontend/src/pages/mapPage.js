@@ -5,7 +5,7 @@ import '../styles/frontendTemplate.css';
 import '../styles/listStyle.css';
 import MapView from '../components/MapView.js';
 import DataView from '../components/DataView.js';
-import Secret from '../data/Secrets';
+import Secret from '../data/Secrets.json';
 import Switch from '@material-ui/core/Switch';
 
 

@@ -2,6 +2,14 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 const AdminAlert = () => {
 
@@ -42,19 +50,47 @@ const AdminAlert = () => {
         
     // }
 
-    return (
-        <div>
-            {result.map((row, i) => {
-                return (
-                <div key={i}>
-                    {row.alert_type + " | " + row.County + " | " + row.message + " | " + row.Dates}
-                    <Button onClick={() => {approve(row.alert_id, true)}} variant="contained" >Approve</Button>
-                    <Button onClick={() => {approve(row.alert_id, false)}} variant="contained">Disapprove</Button>
-                </div>
-            )})}
-        </div>
+    const useStyles = makeStyles({
+        table: {
+          minWidth: 200,
+        },
+      });
 
-    );
-
+    const renderTable = () => {
+        return result.map((row) => {
+          return (
+            <TableRow>
+              <TableCell component="th" scope="row" align="center">{row.alert_type}</TableCell>
+              <TableCell align="center">{row.County}</TableCell>
+              <TableCell align="center">{row.message}</TableCell>
+              <TableCell align="center">{row.Dates}</TableCell>
+              <TableCell align="center"><Button onClick={() => {approve(row.alert_id, true)}} variant="contained" >Approve</Button></TableCell>
+              <TableCell align="center"><Button onClick={() => {approve(row.alert_id, false)}} variant="contained">Disapprove</Button></TableCell>
+            </TableRow>
+          )
+        })
+      }
+    
+      const classes = useStyles();
+    
+      return (
+        <TableContainer component={Paper} spacing={1} justify="center" style={{position: "center"}}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center"><b>Alert Type</b></TableCell>
+                <TableCell align="center"><b>County</b></TableCell>
+                <TableCell align="center"><b>Message&nbsp;</b></TableCell>
+                <TableCell align="center"><b>Date&nbsp;</b></TableCell>
+                <TableCell align="center"><b>Approve&nbsp;</b></TableCell>
+                <TableCell align="center"><b>Deny&nbsp;</b></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {renderTable()}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      );
 };
 export default AdminAlert;

@@ -23,9 +23,10 @@ import AdminDataEdit from '../components/AdminComponents/adminDataEdit';
 import { MemoryRouter } from 'react-router';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import HealingIcon from '@material-ui/icons/Healing';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
+import { setInformation, setIsLoggedIn, setName, setUserType } from '../redux/actions/userActions';
 
 
 const drawerWidth = 240;
@@ -124,20 +125,23 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [ whichMenu, setWhichMenu ] = React.useState("Alerts");
+  const dispatch = useDispatch();
 
   const myCounty = useSelector(state => ({
       information: state.userReducer.information
   }));
-  console.log(myCounty.information)
+  console.log(myCounty.information);
 
   const displayRightMenu = () => {
     switch (whichMenu) {
       case "Alerts":
-        return <AdminAlert></AdminAlert>
+        return <AdminAlert></AdminAlert>;
       case "Data Edit":
-        return <AdminDataEdit></AdminDataEdit>
+        return <AdminDataEdit></AdminDataEdit>;
       case "Logout":
-        return 
+        //dispatch(setUserType(''));
+        //dispatch(setInformation({}));
+        return <Redirect to = "/login" />;
     }
   };
 
@@ -203,7 +207,7 @@ export default function PersistentDrawerLeft() {
           </List>
           <Divider />
           <List aria-label="Login Options">
-            <ListItemLink to="/login" primary="Logout" setMenu={() => setWhichMenu("Logout")} />
+            <ListItemLink to="/logout" primary="Logout" setMenu={() => setWhichMenu("Logout")} />
           </List>
         </Paper>
       </Drawer>

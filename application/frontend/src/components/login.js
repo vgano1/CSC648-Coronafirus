@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInformation, setIsLoggedIn, setUserType } from '../redux/actions/userActions';
+import { useCookies } from "react-cookie";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +44,14 @@ export default function SignIn() {
   //const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const information = useSelector(state => state.userReducer.information);
   const dispatch = useDispatch();
+  const [cookies, setCookie, removeCookie] = useCookies(['userInformations']);
 
+  React.useEffect(() => {
+    if (cookies['userInformations']) {
+      setEmail(cookies['userInformations']['mail']);
+      setPassword(cookies['userInformations']['pwd']);
+    }
+  }, []);
 
   const updatePassword = (g) => {
     setPassword(g.target.value);
@@ -53,7 +61,12 @@ export default function SignIn() {
   }
 //helo
   const redirect = (props) => {
+    console.log(props)
+
     //set userType : Covid , Fire , Admin
+    setCookie("userInformations", JSON.stringify(props), {
+      path: "/"
+    });
     if (props["DID"] > 0) {
       if(props.department ==='Health'){
         dispatch(setUserType('Covid'));
@@ -84,6 +97,7 @@ export default function SignIn() {
       redirect(res.data[0]);
     })
     .catch((e) => {
+      removeCookie('userInfomations');
       console.log(e);
     });
   };
