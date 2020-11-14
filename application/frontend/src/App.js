@@ -7,7 +7,7 @@ import {PrivateRoute} from './pages/privateroute'
 import SignUp from './components/SignUp';
 import { useState, useEffect } from 'react';
 import { Switch, Route, Link, Redirect} from 'react-router-dom';
-import {useCookies} from 'react-cookie';
+import {withCookies} from 'react-cookie';
 function App() {
 
   return (
@@ -28,4 +28,4 @@ function App() {
   );
 }
 
-export default App;
+export default withCookies (App);

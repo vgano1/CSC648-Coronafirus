@@ -63,10 +63,10 @@ export default function SignIn() {
   const redirect = (props) => {
     console.log(props)
 
-    //set userType : Covid , Fire , Admin
     setCookie("userInformations", JSON.stringify(props), {
       path: "/"
     });
+    //set userType : Covid , Fire , Admin
     if (props["DID"] > 0) {
       if(props.department ==='Health'){
         dispatch(setUserType('Covid'));

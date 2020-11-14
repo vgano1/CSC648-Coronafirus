@@ -141,6 +141,7 @@ export default function PersistentDrawerLeft() {
       case "Logout":
         //dispatch(setUserType(''));
         //dispatch(setInformation({}));
+  
         return <Redirect to = "/login" />;
     }
   };
@@ -176,13 +177,6 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
-          <Typography 
-            variant = "h6"
-            color = "inherit"
-            align = "center"
-            className = {classes.typography}>
-              Admin Dashboard
-          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
