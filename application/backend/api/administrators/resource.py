@@ -34,7 +34,7 @@ class ApproveCovid(Resource):
         return data[0]
 
     def post(self):
-        params = ['update_id', 'aid']
+        params = ['update_id', 'aid', 'approve']
         for elem in params:
             parser.add_argument(elem)
         args = parser.parse_args()
@@ -42,20 +42,56 @@ class ApproveCovid(Resource):
         _, recovered, death, confirmed, _, countie = self.getUpdate(args['update_id'])
         self.approve(args['update_id'], args['aid'])
         print(confirmed, death, recovered, countie)
+        if (args['approve']):
+            cur = db.connection.cursor()
+            cur.execute(
+                """
+                    UPDATE covid_data
+                    SET Confirmed = %s, Deaths = %s, Recovered = %s
+                    where Admin2 = %s;
+                """, (confirmed, death, recovered, countie)
+            )
+            db.connection.commit()
+            print(cur.rowcount)
+            if cur.rowcount > 0:
+                return Response("Record Sucessfully updated", status=200)
+            else:
+                return Response("Update failed", status=500)
+        else:
+            return Response("Update Sucessfully Denied", status=500)
+
+class CovidUpdates(Resource):
+
+    def administratorExist(self, aid):
         cur = db.connection.cursor()
         cur.execute(
             """
-                UPDATE covid_data
-                SET Confirmed = %s, Deaths = %s, Recovered = %s
-                where Admin2 = %s;
-            """, (confirmed, death, recovered, countie)
+            Select * from Administrators where AID = %s
+            """, (aid)
         )
-        db.connection.commit()
-        print(cur.rowcount)
-        if cur.rowcount > 0:
-            return Response("Record Sucessfully updated", status=200)
-        else:
-            return Response("Update failed", status=500)
+        return True if cur.rowcount > 0 else False
+
+    def get(self):
+        parser.add_argument('aid')
+        args = parser.parse_args()
+        if self.administratorExist(args['aid']) == False:
+            return Response("Administrators does not exist", 400)
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from Covid_update where Update_id not in (
+	            Select Update_id from Administrator_approved_covid_update
+            );
+            """
+        )
+        data = cur.fetchall()
+        row_headers=[x[0] for x in cur.description]
+        json_data=[]
+        for result in data:
+            json_data.append(dict(zip(row_headers,result)))
+        cur.close()
+        df = pd.DataFrame(json_data)
+        return Response(df.to_json(orient="records"), mimetype='application/json')
 
 class ApproveFire(Resource):
     def approve(self, update_id, aid):
@@ -79,25 +115,30 @@ class ApproveFire(Resource):
         return data[0]
 
     def post(self):
-        params = ['update_id', 'aid']
+        params = ['update_id', 'aid', 'approve']
         for elem in params:
             parser.add_argument(elem)
         args = parser.parse_args()
         _, acres, fireName = self.getUpdate(args['update_id'])
         self.approve(args['update_id'], args['aid'])
-        cur = db.connection.cursor()
-        cur.execute(
-            """
-                UPDATE fire_data
-                SET incident_acres_burned = %s
-                where incident_name = %s;
-            """, (acres, fireName)
-        )
-        db.connection.commit()
-        if cur.rowcount > 0:
-            return Response("Record Sucessfully updated", status=200)
+        if (args['approve']):
+            print(args['update_id'])
+            print(args['approve'])
+            cur = db.connection.cursor()
+            cur.execute(
+                """
+                    UPDATE fire_data
+                    SET incident_acres_burned = %s
+                    where incident_name = %s;
+                """, (acres, fireName)
+            )
+            db.connection.commit()
+            if cur.rowcount > 0:
+                return Response("Record Sucessfully updated", status=200)
+            else:
+                return Response("Update failed", status=500)
         else:
-            return Response("Update failed", status=500)
+            return Response("Update Sucessfully denied", status=200)
 
 class FireUpdates(Resource):
 
@@ -119,7 +160,7 @@ class FireUpdates(Resource):
         cur.execute(
             """
             Select * from fire_update where Update_id not in (
-	            Select Update_id from Administrator_approved_covid_update
+	            Select Update_id from Administrator_approve_fire_update
             );
             """
         )
@@ -131,6 +172,7 @@ class FireUpdates(Resource):
         cur.close()
         df = pd.DataFrame(json_data)
         return Response(df.to_json(orient="records"), mimetype='application/json')
+
 
 class CovidAlerts(Resource):
 
@@ -165,38 +207,6 @@ class CovidAlerts(Resource):
         df = pd.DataFrame(json_data)
         return Response(df.to_json(orient="records"), mimetype='application/json')
 
-class CovidUpdates(Resource):
-
-    def administratorExist(self, aid):
-        cur = db.connection.cursor()
-        cur.execute(
-            """
-            Select * from Administrators where AID = %s
-            """, (aid)
-        )
-        return True if cur.rowcount > 0 else False
-
-    def get(self):
-        parser.add_argument('aid')
-        args = parser.parse_args()
-        if self.administratorExist(args['aid']) == False:
-            return Response("Administrators does not exist", 400)
-        cur = db.connection.cursor()
-        cur.execute(
-            """
-            Select * from Covid_update where Update_id not in (
-	            Select Update_id from Administrator_approved_covid_update
-            );
-            """
-        )
-        data = cur.fetchall()
-        row_headers=[x[0] for x in cur.description]
-        json_data=[]
-        for result in data:
-            json_data.append(dict(zip(row_headers,result)))
-        cur.close()
-        df = pd.DataFrame(json_data)
-        return Response(df.to_json(orient="records"), mimetype='application/json')
 
 class AdministratorLogin(Resource):
     def get(self):

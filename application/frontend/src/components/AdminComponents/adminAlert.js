@@ -57,9 +57,9 @@ const AdminAlert = () => {
       });
 
     const renderTable = () => {
-        return result.map((row) => {
+        return result.map((row, i) => {
           return (
-            <TableRow>
+            <TableRow key={i}>
               <TableCell component="th" scope="row" align="center">{row.alert_type}</TableCell>
               <TableCell align="center">{row.County}</TableCell>
               <TableCell align="center">{row.message}</TableCell>
