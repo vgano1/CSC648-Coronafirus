@@ -40,7 +40,6 @@ body {
   transition-duration: 0.25s;
   border-radius: 5px;
   background: grey;
-  position: static;
   float: right;
 }
 
