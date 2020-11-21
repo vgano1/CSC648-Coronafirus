@@ -26,7 +26,7 @@ import { Link as RouterLink, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector,useDispatch } from 'react-redux'
 import { setInformation, setIsLoggedIn, setUserType } from '../redux/actions/userActions';
-
+import { useCookies } from 'react-cookie';
 
 const drawerWidth = 240;
 
@@ -151,11 +151,14 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [ whichMenu, setWhichMenu ] = React.useState("Edit Data");
+  //test
+  const [cookies] = useCookies();
+  console.log(cookies);
 
   const myCounty = useSelector(state => ({
       information: state.userReducer.information
   }));
-  console.log(myCounty.information)
+  //console.log(myCounty.information)
 
   const url = 'http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/coronavirus/countie/' + myCounty.information['countie'];
   const [result, setResult] = React.useState([]);

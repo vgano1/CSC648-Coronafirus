@@ -28,10 +28,17 @@ const AdminAlert = () => {
         .catch((e)=> {
             console.log(e);
         });
+        const newResult = result.filter(item => item.alertID !== alertID);
+        console.log(newResult)
+        const temp = [...result];
+        temp.splice(i,1)
+        console.log(temp)
     }, []);
+
+    console.log(result);
     
-    const approve = (alertID, approved) => {
-        console.log(alertID, approved);
+    const approve = (alertID, approved, i) => {
+        console.log(alertID, approved, i);
         let data = {
             'aid': information['AID'],
             'alertID': alertID,
@@ -41,10 +48,16 @@ const AdminAlert = () => {
         .then((res) => {
             console.log(res) // !!!
             // data = res.data; //
+            console.log(result);
+            const temp = [...result];
+            temp.splice(i,1)
+            // setResjl 
+            setResult(newResult);
         })
         .catch((e)=> {
             console.log(e) // !!!
         });
+
     };
     // const deny = () => {
         
@@ -57,6 +70,8 @@ const AdminAlert = () => {
       });
 
     const renderTable = () => {
+      //rEA4gsJxKS0XlubLCRvbUPI0yXiomjUb
+        console.log(result.filter(item => item.alertID !== "rEA4gsJxKS0XlubLCRvbUPI0yXiomjUb"));
         return result.map((row, i) => {
           return (
             <TableRow key={i}>
@@ -64,8 +79,8 @@ const AdminAlert = () => {
               <TableCell align="center">{row.County}</TableCell>
               <TableCell align="center">{row.message}</TableCell>
               <TableCell align="center">{row.Dates}</TableCell>
-              <TableCell align="center"><Button onClick={() => {approve(row.alert_id, true)}} variant="contained" >Approve</Button></TableCell>
-              <TableCell align="center"><Button onClick={() => {approve(row.alert_id, false)}} variant="contained">Disapprove</Button></TableCell>
+              <TableCell align="center"><Button onClick={() => {approve(row.alert_id, true , i)}} variant="contained" >Approve</Button></TableCell>
+              <TableCell align="center"><Button onClick={() => {approve(row.alert_id, false, i)}} variant="contained">Disapprove</Button></TableCell>
             </TableRow>
           )
         })
