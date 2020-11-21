@@ -22,23 +22,18 @@ const AdminAlert = () => {
             'aid': information['AID']
         })
         .then(res => {
-            console.log(res);
             setResult(res.data);
         })
         .catch((e)=> {
             console.log(e);
         });
-        const newResult = result.filter(item => item.alertID !== alertID);
-        console.log(newResult)
-        const temp = [...result];
-        temp.splice(i,1)
-        console.log(temp)
+        // const temp = [...result];
+        // temp.splice(i,1)
+        // console.log(temp)
     }, []);
 
-    console.log(result);
     
     const approve = (alertID, approved, i) => {
-        console.log(alertID, approved, i);
         let data = {
             'aid': information['AID'],
             'alertID': alertID,
@@ -46,13 +41,13 @@ const AdminAlert = () => {
         };
         axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/send-alert/', data)
         .then((res) => {
-            console.log(res) // !!!
+            console.log(res);
             // data = res.data; //
-            console.log(result);
-            const temp = [...result];
-            temp.splice(i,1)
+            // const temp = [...result];
+            // temp.splice(i,1)
             // setResjl 
-            setResult(newResult);
+            // setResult(newResult);
+            setResult(result.filter(item => item['alert_id'] !== alertID));
         })
         .catch((e)=> {
             console.log(e) // !!!
@@ -71,7 +66,6 @@ const AdminAlert = () => {
 
     const renderTable = () => {
       //rEA4gsJxKS0XlubLCRvbUPI0yXiomjUb
-        console.log(result.filter(item => item.alertID !== "rEA4gsJxKS0XlubLCRvbUPI0yXiomjUb"));
         return result.map((row, i) => {
           return (
             <TableRow key={i}>
@@ -87,7 +81,6 @@ const AdminAlert = () => {
       }
     
       const classes = useStyles();
-    
       return (
         <TableContainer component={Paper} spacing={1} justify="center" style={{position: "center"}}>
           <Table className={classes.table} aria-label="simple table">
