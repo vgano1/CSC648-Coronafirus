@@ -35,12 +35,15 @@ body {
   z-index: 2;
 }
 
+.rightSide {
+  float: right;
+}
+
 .signUp {
   padding: 1em 2em;
   transition-duration: 0.25s;
   border-radius: 5px;
   background: grey;
-  float: right;
 }
 
 .signUp:hover {
@@ -72,6 +75,8 @@ body {
     display: flex;
     justify-content: left;
     align-items: center;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
   .main-footer {
     grid-area: footer;
@@ -83,6 +88,8 @@ body {
     }
   .map { 
     grid-area: map;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
   .side { 
     grid-area: side; 
@@ -90,7 +97,7 @@ body {
     overflow-y: scroll;
 
     background: rgb(42, 42, 42);
-
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
   /* Stack the layout on small devices/viewports. */
   @media all and (max-width: 1000px) {

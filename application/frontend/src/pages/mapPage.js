@@ -84,13 +84,13 @@ function MapPage() {
               <div className="main-head foreground">
                 <h2>Coronafirus</h2>
                 <Switch
-                  style={{ float: "right" }}
+                  className="rightSide"
                   checked={mode}
                   onChange={checkbox}
                   name="checkedA"
                   inputProps={{ 'aria-label': 'secondary checkbox' }}
                 />
-                <button className="signUp" onClick={routeChange}>Sign Up</button>
+                <button className="signUp rightSide" onClick={routeChange}>Sign Up</button>
               </div>
               <div className="map foreground">
                   <MapView mapsSecret={Secret.GoogleMaps.ApiKey} selectedCounty={setSelected}/>
@@ -98,7 +98,8 @@ function MapPage() {
               <div className="side foreground">
                   <DataView results={results} caGovApi={caGovApi} mode={mode}/>
               </div>
-              <div className="main-footer foreground">SFSU Software Engineering Project CSC 648-848, Fall 2020. For Demonstration Only</div>
+              <div className="main-footer foreground">SFSU Software Engineering Project CSC 648-848, Fall 2020. For Demonstration Only
+              </div>
           </div>
         </div>
       </div>
@@ -106,13 +107,6 @@ function MapPage() {
   } else {
       return (<Redirect to = "/signup" />);
   }
-
-// here
-
-
-
-
-
 
 }
 
