@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux';
  const LoginPage = () => {
      const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
      const userType = useSelector(state => state.userReducer.userType);
+
      if(isLoggedIn){
         if(userType === 'Covid'){
             return (<Redirect from = "/login" to = "/Covid"/>);

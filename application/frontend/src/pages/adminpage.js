@@ -31,33 +31,6 @@ import { setInformation, setIsLoggedIn, setName, setUserType } from '../redux/ac
 
 const drawerWidth = 240;
 
-function ListItemLink(props) {
-
-    const { icon, primary, to, setMenu } = props;
-  
-    const renderLink = React.useMemo(
-      () => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
-      [to],
-    );
-  
-    return (
-      <li>
-        <ListItem button component={renderLink} onClick={() => setMenu()}>
-          {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
-          <ListItemText primary={primary} />
-        </ListItem>
-      </li>
-      
-    );
-}
-  
-ListItemLink.propTypes = {
-    icon: PropTypes.element,
-    primary: PropTypes.string.isRequired,
-    to: PropTypes.string.isRequired,
-};
-  
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -120,12 +93,65 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function ListItemLink(props) {
+
+    const { icon, primary, to, setMenu } = props;
+  
+    const renderLink = React.useMemo(
+      () => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
+      [to],
+    );
+  
+    return (
+      <li>
+        <ListItem button component={renderLink} onClick={() => setMenu()}>
+          {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+          <ListItemText primary={primary} />
+        </ListItem>
+      </li>
+      
+    );
+}
+
+//for solely Logging out
+function ListItemLink2(props) {
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    dispatch(setInformation({}));
+    dispatch(setUserType(''));
+    dispatch(setIsLoggedIn(false));
+  }
+
+  const { icon, primary, to } = props;
+
+  const renderLink = React.useMemo(
+    () => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
+    [to],
+  );
+
+  return (
+    <li>
+      <ListItem button component={renderLink} onClick={logOut}>
+        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        <ListItemText primary={primary} />
+      </ListItem>
+    </li>
+    
+  );
+}
+  
+ListItemLink.propTypes = {
+    icon: PropTypes.element,
+    primary: PropTypes.string.isRequired,
+    to: PropTypes.string.isRequired,
+};
+
 export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [ whichMenu, setWhichMenu ] = React.useState("Alerts");
-  const dispatch = useDispatch();
 
   const myCounty = useSelector(state => ({
       information: state.userReducer.information
@@ -138,11 +164,6 @@ export default function PersistentDrawerLeft() {
         return <AdminAlert></AdminAlert>;
       case "Data Edit":
         return <AdminDataEdit></AdminDataEdit>;
-      case "Logout":
-        //dispatch(setUserType(''));
-        //dispatch(setInformation({}));
-  
-        return <Redirect to = "/login" />;
     }
   };
 
@@ -201,7 +222,7 @@ export default function PersistentDrawerLeft() {
           </List>
           <Divider />
           <List aria-label="Login Options">
-            <ListItemLink to="/logout" primary="Logout" setMenu={() => setWhichMenu("Logout")} />
+            <ListItemLink2 to="/login" primary="Logout"/>
           </List>
         </Paper>
       </Drawer>

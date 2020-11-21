@@ -8,20 +8,10 @@ export const PrivateRoute = (props) => {
 
     //console.log(props);
     if(isLoggedIn){
-        if(userType === 'Covid'){
+        if(userType === 'Covid' || userType === "Fire" || userType ==='Admin' ){
             return (
                 <Route path = {props.path} component = {props.component}/>
             );
-        }
-        else if (userType ==='Fire'){
-            return (
-                <Route path = {props.path} component = {props.component} />
-            );
-        }
-        else if(userType ==='Admin'){
-            return (
-                <Route path = {props.path} component = {props.component} />
-            ); 
         }
     }else {
         return(
