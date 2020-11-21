@@ -174,17 +174,18 @@ class UpdateFire(Resource):
     def post(self):
         parser.add_argument('did')
         parser.add_argument('acres')
+        parser.add_argument('containment')
         parser.add_argument('fire_name')
-        acres, did, fireName = parser.parse_args()['acres'], parser.parse_args()['did'], parser.parse_args()['fire_name']
+        acres, did, fireName, containment = parser.parse_args()['acres'], parser.parse_args()['did'], parser.parse_args()['fire_name'], parser.parse_args()['containment']
         if (not self.directorExist(did)):
             return Response("Director does not exist", 500)
         randomID = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
         cur = db.connection.cursor()
         cur.execute(
             """
-                INSERT INTO fire_update (Update_id, incident_acres_burned, fire_name)
-                VALUES (%s, %s, %s);
-            """, (randomID, acres, fireName)
+                INSERT INTO fire_update (Update_id, incident_acres_burned, incident_containment, fire_name)
+                VALUES (%s, %s, %s, %s);
+            """, (randomID, acres, containment, fireName)
         )
         db.connection.commit()
         if cur.rowcount > 0:

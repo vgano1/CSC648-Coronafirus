@@ -119,7 +119,7 @@ class ApproveFire(Resource):
         for elem in params:
             parser.add_argument(elem)
         args = parser.parse_args()
-        _, acres, fireName = self.getUpdate(args['update_id'])
+        _, acres, containment, fireName = self.getUpdate(args['update_id'])
         self.approve(args['update_id'], args['aid'])
         if (args['approve']):
             print(args['update_id'])
@@ -128,9 +128,9 @@ class ApproveFire(Resource):
             cur.execute(
                 """
                     UPDATE fire_data
-                    SET incident_acres_burned = %s
+                    SET incident_acres_burned = %s, incident_containment = %s
                     where incident_name = %s;
-                """, (acres, fireName)
+                """, (acres, containment, fireName)
             )
             db.connection.commit()
             if cur.rowcount > 0:
