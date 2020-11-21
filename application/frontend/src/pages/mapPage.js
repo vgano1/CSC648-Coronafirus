@@ -11,6 +11,7 @@ import Switch from '@material-ui/core/Switch';
 
 function MapPage() {
     const [results, setResults] = React.useState(null);
+    const [caGovApi, setCaGovApi] = React.useState(null);
     const [mode, setMode] = React.useState(true); // true for Wildfire, false for Covid
     const [selected, setSelected] = React.useState(null);
     const [redirect,setRedirect] = React.useState(false);
@@ -53,6 +54,15 @@ function MapPage() {
         .catch(() => {
           setResults(null);
         });
+
+        axios.get('https://data.ca.gov/api/3/action/datastore_search?resource_id=28cbcbef-d7d6-4b71-b54d-453418f30d6f&q=' + input)
+        .then((res) => {
+          console.log(res);
+          setCaGovApi(res.data);
+        })
+        .catch(() => {
+          setCaGovApi(null);
+        });
       }
       else {
         axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/wildfire/countie/' + input)
@@ -86,7 +96,7 @@ function MapPage() {
                   <MapView mapsSecret={Secret.GoogleMaps.ApiKey} selectedCounty={setSelected}/>
               </div>
               <div className="side foreground">
-                  <DataView results={results} mode={mode}/>
+                  <DataView results={results} caGovApi={caGovApi} mode={mode}/>
               </div>
               <div className="main-footer foreground">SFSU Software Engineering Project CSC 648-848, Fall 2020. For Demonstration Only</div>
           </div>
