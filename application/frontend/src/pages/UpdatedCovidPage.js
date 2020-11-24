@@ -139,7 +139,7 @@ function ListItemLink2(props) {
     
   );
 }
-  
+
 ListItemLink.propTypes = {
     icon: PropTypes.element,
     primary: PropTypes.string.isRequired,
@@ -151,6 +151,8 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [ whichMenu, setWhichMenu ] = React.useState("Edit Data");
+
+  const [redirect, setRedirect] = React.useState(false);
   //test
   const [cookies] = useCookies();
   console.log(cookies);
@@ -187,68 +189,91 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
-  return (
-    <MemoryRouter initialEntries = {['/Covid']} initialIndex ={0}>
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-        style={{ "background": "rgb(85,214,67)",
-          "background": "linear-gradient(170deg, #55d643 0%, rgba(42,143,235,1) 100%)"}}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
-          <Typography 
-            variant = "h6"
-            color = "inherit"
-            align = "center"
-            className = {classes.typography}>
-              Health Director Dashboard
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <Paper elevation={0}>
-          <List aria-label="Health Options">
-            <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
-            <ListItemLink to="/editdata" primary="Edit Data" icon={<AssignmentIcon />} setMenu={() => setWhichMenu("Edit Data")} />
-          </List>
+  //listitemlink3 is for redirecting the page to the homepage/map
+  function ListItemLink3(props) {  
+    const { icon, primary, to } = props;
+    const renderLink = React.useMemo(
+      () => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
+      [to],
+    );
+  
+    return (      
+    <li>
+      <ListItem button component={renderLink} onClick={() => setRedirect(true)}>
+        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        <ListItemText primary={primary} />
+      </ListItem>
+    </li>);
+  }
+
+  if(!redirect){
+    return (
+      <MemoryRouter initialEntries = {['/Covid']} initialIndex ={0}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+          style={{ "background": "rgb(85,214,67)",
+            "background": "linear-gradient(170deg, #55d643 0%, rgba(42,143,235,1) 100%)"}}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
+            <Typography 
+              variant = "h6"
+              color = "inherit"
+              align = "center"
+              className = {classes.typography}>
+                Health Director Dashboard
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
           <Divider />
-          <List aria-label="Login Options">
-          <ListItemLink2 to="/login" primary="Logout"/>
-          </List>
-        </Paper>
-      </Drawer>
-    </div>
-    <body>
-      {displayRightMenu()}
-    </body>
-    </MemoryRouter>
-  );
+          <Paper elevation={0}>
+            <List aria-label="Health Options">
+              <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
+              <ListItemLink to="/editdata" primary="Edit Data" icon={<AssignmentIcon />} setMenu={() => setWhichMenu("Edit Data")} />
+              <ListItemLink3 to="/" primary="View Map"  setMenu={() => setWhichMenu("Map")} />
+            </List>
+            <Divider />
+            <List aria-label="Login Options">
+            <ListItemLink2 to="/login" primary="Logout"/>
+            </List>
+          </Paper>
+        </Drawer>
+      </div>
+      <body>
+        {displayRightMenu()}
+      </body>
+      </MemoryRouter>
+    );
+  }else{
+    return (<Redirect to ="/"/>);
+  }
+
 }
