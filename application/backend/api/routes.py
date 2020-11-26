@@ -1,7 +1,7 @@
 from api.coronavirus.resource import Covid, CovidByCountie
 from api.wildfire.resource import FireList, FireByCountie, FireByName
-from api.directors.resource import DirectorLogin, UpdateCovid, CovidDataAvailable, UpdateFire, FireDataAvailable, AskCovidAlert
-from api.administrators.resource import CovidUpdates, AdministratorLogin, ApproveCovid, ApproveFire, SendAlert, FireUpdates, GetAlerts
+from api.directors.resource import DirectorLogin, UpdateCovid, CovidDataAvailable, UpdateFire, FireDataAvailable, AskCovidAlert, DirectorAddFire
+from api.administrators.resource import CovidUpdates, AdministratorLogin, ApproveCovid, ApproveFire, SendAlert, FireUpdates, GetAlerts, ApproveFireAdd, NewFires
 from api.users.resource import CreateUser
 
 def initialize_routes(api):
@@ -24,5 +24,8 @@ def initialize_routes(api):
     api.add_resource(AskCovidAlert, '/create-alert/')
     api.add_resource(SendAlert, '/send-alert/')
     api.add_resource(GetAlerts, '/get-alerts/')
+    api.add_resource(DirectorAddFire, '/add-fire/')
+    api.add_resource(ApproveFireAdd, '/approve-add-fire/')
+    api.add_resource(NewFires, '/new-fires/')
 
     # api.add_resource(SendMail, '/send-mail/')

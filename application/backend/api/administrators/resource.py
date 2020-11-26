@@ -140,6 +140,87 @@ class ApproveFire(Resource):
         else:
             return Response("Update Sucessfully denied", status=200)
 
+
+class NewFires(Resource):
+
+    def administratorExist(self, aid):
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from Administrators where AID = %s
+            """, (aid)
+        )
+        return True if cur.rowcount > 0 else False
+
+    def get(self):
+        parser.add_argument('aid')
+        args = parser.parse_args()
+        if self.administratorExist(args['aid']) == False:
+            return Response("Administrators does not exist", 400)
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from fire_add where fire_add_id not in (
+	            Select fire_add_id from administrator_approve_fire_add
+            );
+            """
+        )
+        data = cur.fetchall()
+        row_headers=[x[0] for x in cur.description]
+        json_data=[]
+        for result in data:
+            json_data.append(dict(zip(row_headers,result)))
+        cur.close()
+        df = pd.DataFrame(json_data)
+        return Response(df.to_json(orient="records"), mimetype='application/json')
+
+class ApproveFireAdd(Resource):
+    def approve(self, fire_add_id, aid):
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            INSERT INTO administrator_approve_fire_add (fire_add_id, AID)
+            VALUES (%s, %s);
+            """, (fire_add_id, aid)
+        )
+        db.connection.commit()
+
+    def getUpdate(self, update_id):
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from fire_add where fire_add_id = %s
+            """, (update_id,)
+        )
+        data = cur.fetchall()
+        return data[0]
+
+    def post(self):
+        params = ['update_id', 'aid', 'approve']
+        for elem in params:
+            parser.add_argument(elem)
+        args = parser.parse_args()
+        data = self.getUpdate(args['update_id'])
+        self.approve(args['update_id'], args['aid'])
+        if (args['approve']):
+            cur = db.connection.cursor()
+            cur.execute(
+                """
+                    INSERT INTO fire_data (incident_id, incident_name, incident_is_final, incident_date_last_update, incident_date_created, incident_administrative_unit, incident_administrative_unit_url, incident_location, incident_county, incident_control, incident_cooperating_agencies, incident_type, incident_url, incident_date_extinguished, incident_dateonly_extinguished, incident_dateonly_created, is_active, calfire_incident, notification_desired, incident_acres_burned, incident_containment, incident_longitude, incident_latitude)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+                """, data
+            )
+            db.connection.commit()
+            if cur.rowcount > 0:
+                return Response("Record Sucessfully added", status=200)
+            else:
+                return Response("Add failed", status=500)
+        else:
+            return Response("Add Sucessfully denied", status=200)
+
+
+
+
 class FireUpdates(Resource):
 
     def administratorExist(self, aid):

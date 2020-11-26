@@ -100,6 +100,54 @@ class CovidDataAvailable(Resource):
             df = pd.DataFrame(json_data)
             return Response(df.to_json(orient="records"), mimetype='application/json')
 
+
+class DirectorAddFire(Resource):
+    def directorExist(self, did):
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+            Select * from directors where DID = %s
+            """, (did)
+        )
+        return True if cur.rowcount > 0 else False
+    
+    def post(self):
+        arguments = ['did', 'calfire_incident', 'incident_acres_burned', 'incident_administrative_unit', 'incident_administrative_unit_url', 'incident_containment', 'incident_control', 'incident_cooperating_agencies', 'incident_county', 'incident_date_created', 'incident_date_extinguished', 'incident_date_last_update', 'incident_dateonly_created', 'incident_dateonly_extinguished', 'incident_id', 'incident_is_final', 'incident_latitude', 'incident_location', 'incident_longitude', 'incident_name', 'incident_type', 'incident_url', 'is_active', 'notification_desired']
+        for elem in arguments:
+            parser.add_argument(elem)
+        args = parser.parse_args()
+        print(args)
+        randomID = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
+        cur = db.connection.cursor()
+        cur.execute(
+            """
+                INSERT INTO fire_add (calfire_incident, incident_acres_burned, incident_administrative_unit, incident_administrative_unit_url, incident_containment, incident_control, incident_cooperating_agencies, incident_county, incident_date_created, incident_date_extinguished, incident_date_last_update, incident_dateonly_created, incident_dateonly_extinguished, fire_add_id, incident_is_final, incident_latitude, incident_location, incident_longitude, incident_name, incident_type, incident_url, is_active, notification_desired)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+            """, (args['calfire_incident'], args['incident_acres_burned'], args['incident_administrative_unit'], args['incident_administrative_unit_url'], args['incident_containment'], args['incident_control'], args['incident_cooperating_agencies'], args['incident_county'], args['incident_date_created'], args['incident_date_extinguished'], args['incident_date_last_update'], args['incident_dateonly_created'], args['incident_dateonly_extinguished'], randomID, args['incident_is_final'], args['incident_latitude'], args['incident_location'], args['incident_longitude'], args['incident_name'], args['incident_type'], args['incident_url'], args['is_active'], args['notification_desired'])
+        )
+        data = cur.fetchall()
+        db.connection.commit()
+
+        # if (cur.rowcount == 0):
+        #     cur = db.connection.cursor()
+        #     cur.execute(
+        #         """
+        #         Select * from Administrators where mail = %s and pwd = %s;
+        #         """, (email, password)
+        #     )
+        #     data = cur.fetchall()
+        #     if (cur.rowcount == 0):
+        #         return Response("No account found!!")
+        # row_headers=[x[0] for x in cur.description]
+        # json_data=[]
+        # for result in data:
+        #     json_data.append(dict(zip(row_headers,result)))
+        # cur.close()
+        # df = pd.DataFrame(json_data)
+        return Response("Success")
+
+
+
 class DirectorLogin(Resource):
     def post(self):
         parser.add_argument('email')
