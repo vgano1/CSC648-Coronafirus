@@ -20,6 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import AdminAlert from '../components/AdminComponents/adminAlert';
 import AdminDataEdit from '../components/AdminComponents/adminDataEdit';
+import AdminAddEntry from '../components/AdminComponents/adminAddEntry';
 import { MemoryRouter } from 'react-router';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 import axios from 'axios';
@@ -89,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   typography: {
-      flexGrow: 0.75,
+      flexGrow: 1,
   }
 }));
 
@@ -164,6 +165,8 @@ export default function PersistentDrawerLeft() {
         return <AdminAlert></AdminAlert>;
       case "Data Edit":
         return <AdminDataEdit></AdminDataEdit>;
+      case "Add Entry":
+        return <AdminAddEntry></AdminAddEntry>;
     }
   };
 
@@ -197,7 +200,13 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
+          <Typography 
+              variant = "h6"
+              color = "inherit"
+              align = "center"
+              className = {classes.typography}>
+                <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
+            </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -219,6 +228,7 @@ export default function PersistentDrawerLeft() {
           <List aria-label="Admin Options">
             <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
             <ListItemLink to="/dataedit" primary="Data Edit" icon={<WhatshotIcon />} setMenu={() => setWhichMenu("Data Edit")} />
+            <ListItemLink to="/addentry" primary="Add Entry" icon={<WhatshotIcon />} setMenu={() => setWhichMenu("Add Entry")} />
           </List>
           <Divider />
           <List aria-label="Login Options">

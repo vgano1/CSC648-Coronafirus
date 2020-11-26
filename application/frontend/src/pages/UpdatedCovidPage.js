@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   typography: {
-      flexGrow: 0.75,
+      flexGrow: 1,
   }
 }));
 
@@ -229,13 +229,13 @@ export default function PersistentDrawerLeft() {
             >
               <MenuIcon />
             </IconButton>
-            <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
+            
             <Typography 
               variant = "h6"
               color = "inherit"
               align = "center"
               className = {classes.typography}>
-                Health Director Dashboard
+                <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
             </Typography>
           </Toolbar>
         </AppBar>

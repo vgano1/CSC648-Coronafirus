@@ -92,7 +92,7 @@ const BasicTable = (props) => {
           <TableCell align="center">{row.Active}</TableCell>
           <TableCell align="center">{row.Incidence_Rate}</TableCell>
           <TableCell align="center">{row["Case-Fatality_Ratio"]}</TableCell>
-          <Button variant="contained" onClick={() => updateData()}>Update</Button>
+          <TableCell align="center"><Button variant="contained" onClick={() => updateData()}>Update</Button></TableCell>
         </TableRow>
       )
     })
