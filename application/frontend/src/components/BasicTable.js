@@ -59,7 +59,7 @@ const BasicTable = (props) => {
     axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/update-fire/', {
       "did": myCounty.information['DID'],
       "acres": acres[i][1],
-      "fire_name": acres[i][0],
+      "fire_name": acres[i][0] ? acres[i][0] : containment[i][0],
       "containment": containment[i][1]
     })
     .then(function (response) {
@@ -81,7 +81,7 @@ const BasicTable = (props) => {
     let newContainment = containment;
     newContainment[i] = [props.result[i].incident_name, parseInt(event.target.value)];
     setContainment(newContainment);
-    console.log(acres);
+    console.log(containment);
   }
 
   const renderTable = () => {
@@ -91,8 +91,8 @@ const BasicTable = (props) => {
                 <TableCell component="th" scope="row">{row.incident_name}</TableCell>
                 <TableCell align="center">{row.incident_county}</TableCell>
                 <TableCell align="center">{row.incident_location}</TableCell>
-                <TableCell align="center"><TextField required id="standard-required" label="Required" defaultValue={row.incident_acres_burned} onChange={(e) => handleChangeAcres(e, i)}/></TableCell>
-                <TableCell align="center"><TextField required id="standard-required" label="Required" defaultValue={row.incident_containment} onChange={(e) => handleChangeContainment(e,i)}/></TableCell>
+                <TableCell align="center"><TextField type= "number" required id="standard-required" label="Required" defaultValue={row.incident_acres_burned} onChange={(e) => handleChangeAcres(e, i)}/></TableCell>
+                <TableCell align="center"><TextField type= "number" InputProps={{inputProps: { max: 100, min: 0}}} required id="standard-required" label="Required" defaultValue={row.incident_containment} onChange={(e) => handleChangeContainment(e, i)}/></TableCell>
                 <TableCell align="center">{row.is_active}</TableCell>
                 <TableCell align="center">{row.incident_dateonly_created}</TableCell>
                 <TableCell align="center"><Button variant="contained" onClick={() => updateData(i)}>Update</Button></TableCell>

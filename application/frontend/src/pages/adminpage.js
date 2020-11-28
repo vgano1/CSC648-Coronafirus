@@ -16,17 +16,21 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import MapIcon from '@material-ui/icons/Map';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import AdminAlert from '../components/AdminComponents/adminAlert';
 import AdminDataEdit from '../components/AdminComponents/adminDataEdit';
 import AdminAddEntry from '../components/AdminComponents/adminAddEntry';
+import MapPage from '../pages/mapPage';
 import { MemoryRouter } from 'react-router';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import HealingIcon from '@material-ui/icons/Healing';
-import WhatshotIcon from '@material-ui/icons/Whatshot';
+//import HealingIcon from '@material-ui/icons/Healing';
+//import WhatshotIcon from '@material-ui/icons/Whatshot';
 import { setInformation, setIsLoggedIn, setName, setUserType } from '../redux/actions/userActions';
 
 
@@ -167,6 +171,8 @@ export default function PersistentDrawerLeft() {
         return <AdminDataEdit></AdminDataEdit>;
       case "Add Entry":
         return <AdminAddEntry></AdminAddEntry>;
+      case "View Map":
+          return (<Redirect to = "/" />);
     }
   };
 
@@ -187,8 +193,8 @@ export default function PersistentDrawerLeft() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        style={{ "background": "rgb(85,214,67)",
-          "background": "linear-gradient(170deg, #55d643 0%, #FF0F00 100%)"}}
+        style={{ "background": "rgb(42,42,42)",
+          "background": "linear-gradient(365deg, rgba(255,255,2555) 0%, rgba(42,42,42) 100%)"}}
       >
         <Toolbar>
           <IconButton
@@ -200,12 +206,13 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography 
+          <img src="https://i.ibb.co/KrZtqF1/Coronafirus-Logo.png" alt="coronalogo-cropped" width="300px"/>
+          <Typography  
               variant = "h6"
               color = "inherit"
               align = "center"
               className = {classes.typography}>
-                <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
+                
             </Typography>
         </Toolbar>
       </AppBar>
@@ -227,8 +234,9 @@ export default function PersistentDrawerLeft() {
         <Paper elevation={0}>
           <List aria-label="Admin Options">
             <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
-            <ListItemLink to="/dataedit" primary="Data Edit" icon={<WhatshotIcon />} setMenu={() => setWhichMenu("Data Edit")} />
-            <ListItemLink to="/addentry" primary="Add Entry" icon={<WhatshotIcon />} setMenu={() => setWhichMenu("Add Entry")} />
+            <ListItemLink to="/dataedit" primary="Data Edit" icon={<AssignmentIcon />} setMenu={() => setWhichMenu("Data Edit")} />
+            <ListItemLink to="/addentry" primary="Add Entry" icon={<PostAddIcon />} setMenu={() => setWhichMenu("Add Entry")} />
+            <ListItemLink to="/viewmap" primary="View Map" icon = {<MapIcon/>} setMenu={() => setWhichMenu("View Map")} />
           </List>
           <Divider />
           <List aria-label="Login Options">

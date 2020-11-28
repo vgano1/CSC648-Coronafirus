@@ -56,7 +56,7 @@ const AdminDataEdit = () => {
         axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/approve-fire/', data)
         .then((res) => {
             console.log(res) // !!!
-            // data = res.data; //
+            setfireResult(fireResult.filter(item => item['update_id'] !== update_id));
         })
         .catch((e)=> {
             console.log(e) // !!!
@@ -74,6 +74,7 @@ const AdminDataEdit = () => {
         .then((res) => {
             console.log(res) // !!!
             // data = res.data; //
+            setCovidResult(covidResult.filter(item => item['Update_id'] !== update_id));
         })
         .catch((e)=> {
             console.log(e) // !!!

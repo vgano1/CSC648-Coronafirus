@@ -18,12 +18,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import MapIcon from '@material-ui/icons/Map';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import FireAlertSubmit from '../components/fireAlertSubmit';
 import BasicTable from '../components/BasicTable';
 import FireAddEntry from '../components/FireComponent/fireAddEntry';
-import MapView from '../components/MapView';
+import MapPage from '../pages/mapPage';
 import { MemoryRouter } from 'react-router';
 import { Link as RouterLink, Redirect} from 'react-router-dom';
 import axios from 'axios';
@@ -178,7 +179,8 @@ export default function PersistentDrawerLeft() {
       case "Add Fire Entry": 
         return (<FireAddEntry />);
       case "View Map":
-        return (<MapView/>);
+        //put map component here
+        return (<MapPage />);
     }
   };
 
@@ -199,8 +201,8 @@ export default function PersistentDrawerLeft() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        style={{ "background": "rgb(176,82,246)", 
-          "background": "linear-gradient(346deg, rgba(176,82,246,1) 0%, rgba(240,85,85,1) 100%)"}}
+        style={{ "background": "rgb(42, 42, 42)", 
+          "background": "linear-gradient(346deg, rgba(255,255,255) 0%, rgba(42,42,42) 100%)"}}
       >
         <Toolbar>
           <IconButton
@@ -212,13 +214,14 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          
+          <img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/>
+          <img src="https://i.ibb.co/KrZtqF1/Coronafirus-Logo.png" alt="logo-cropped" width="300px"/>
           <Typography 
             variant = "h6"
             color = "inherit"
             align = "center"
             className = {classes.typography}>
-              <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
+          
           </Typography>
         </Toolbar>
       </AppBar>
@@ -242,7 +245,7 @@ export default function PersistentDrawerLeft() {
             <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
             <ListItemLink to="/editdata" primary="Edit Data" icon={<AssignmentIcon />} setMenu={() => setWhichMenu("Edit Data")} />
             <ListItemLink to="/addfireentry" primary="Add Fire Entry" icon={<PostAddIcon />} setMenu={() => setWhichMenu("Add Fire Entry")} />
-            <ListItemLink to="/viewMap" primary="View Map" icon={<PostAddIcon />} setMenu={() => setWhichMenu("View Map")} />
+            <ListItemLink to="/viewMap" primary="View Map" icon={<MapIcon />} setMenu={() => setWhichMenu("View Map")} />
           </List>
           <Divider />
           <List aria-label="Login Options">

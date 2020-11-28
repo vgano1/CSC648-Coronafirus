@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 const AdminAddEntry = () => {
 
     const information = useSelector(state => state.userReducer.information);  
-    const [ newFires, setNewFires ] = useState([]);
+    const [ newFires, setNewFires ] = useState([]); 
 
     useEffect(() => {
         axios.get('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/new-fires', {
@@ -31,15 +31,16 @@ const AdminAddEntry = () => {
         });
       }, []);
 
-      const approve = (update_id, approved , i) => {
+      const approve = (fire_add_id, approved , i) => {
           let data = {
-            'update_id': update_id,
+            'update_id': fire_add_id,
             'aid': information['AID'],
             'approve': approved,
           };
           axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/approve-add-fire/', data)
           .then((res) => {
-              console.log(res);
+            setNewFires(newFires.filter(item => item['fire_add_id'] !== fire_add_id));
+            console.log(res);
           })
           .catch(e => {
               console.log(e);

@@ -7,20 +7,15 @@ import MapView from '../components/MapView.js';
 import DataView from '../components/DataView.js';
 import Secret from '../data/Secrets.json';
 import Switch from '@material-ui/core/Switch';
-import { useSelector } from 'react-redux';
 
 
-
-function MapPage() {
+function DirectorMapPage() {
     const [results, setResults] = React.useState(null);
     const [caGovApi, setCaGovApi] = React.useState(null);
     const [mode, setMode] = React.useState(true); // true for Wildfire, false for Covid
     const [selected, setSelected] = React.useState(null);
     const [redirect,setRedirect] = React.useState(false);
     const [path, setPath] = React.useState("");
-    const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn); //boolean
-    const userType = useSelector(state => state.userReducer.userType); //String
-    const information = useSelector(state => state.userReducer.information);//array
 
     React.useEffect(() => {
       if(selected) {
@@ -87,10 +82,6 @@ function MapPage() {
         <div className={mode ? 'background' : 'background fade'} />
           <div className="wrapper foreground">
               <div className="main-head foreground">
-              {/* {userType === "Fire" && (<img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/>)}
-              {userType === "Covid" && (<img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/>)} */}
-              {mode ? <img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/> : <img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/>}
-              <img src="https://i.ibb.co/KrZtqF1/Coronafirus-Logo.png" alt="logo-cropped" width="300px"/>
                 <Switch
                   className="rightSide"
                   checked={mode}
@@ -98,8 +89,6 @@ function MapPage() {
                   name="checkedA"
                   inputProps={{ 'aria-label': 'secondary checkbox' }}
                 />
-                {!isLoggedIn && <button className="signUp rightSide" onClick={routeChange}>Sign Up</button>}
-                {isLoggedIn && <button className="signUp rightSide" onClick={routeChange}>Dashboard</button>}
               </div>
               <div className="map foreground">
                   <MapView mapsSecret={Secret.GoogleMaps.ApiKey} selectedCounty={setSelected}/>
@@ -119,4 +108,4 @@ function MapPage() {
 
 }
 
-export default MapPage;
+export default DirectorMapPage;

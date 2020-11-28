@@ -17,10 +17,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import MapIcon from '@material-ui/icons/Map';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import COVIDAlertSubmit from '../components/countyAlertSubmit';
 import BasicTableCovid from '../components/BasicTableCovid';
+import MapPage from '../pages/mapPage';
 import { MemoryRouter } from 'react-router';
 import { Link as RouterLink} from 'react-router-dom';
 import axios from 'axios';
@@ -171,14 +173,23 @@ export default function PersistentDrawerLeft() {
     });
   }, [])
 
+  const tableStyle = {
+   height: ""
+  }
+
   const displayRightMenu = () => {
     switch (whichMenu) {
       case "Edit Data":
-        return <BasicTableCovid result={result}></BasicTableCovid>
+        return (<div style={tableStyle}>
+                  <BasicTableCovid result={result}></BasicTableCovid>
+                </div>)
       case "Alerts":
-        return <COVIDAlertSubmit></COVIDAlertSubmit>
+        return (<div style={tableStyle}>
+                  <COVIDAlertSubmit></COVIDAlertSubmit>
+                </div>)
       case "View Map":
-        return <COVIDAlertSubmit></COVIDAlertSubmit>
+          //put map component here
+          return (<MapPage />);
     }
   };
 
@@ -199,8 +210,8 @@ export default function PersistentDrawerLeft() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        style={{ "background": "rgb(85,214,67)",
-          "background": "linear-gradient(170deg, #55d643 0%, rgba(42,143,235,1) 100%)"}}
+        style={{ "background": "rgb(42,42,42)",
+          "background": "linear-gradient(346deg, rgba(255,255,255) 0%, rgba(42,42,42) 100%)"}}
       >
         <Toolbar>
           <IconButton
@@ -212,13 +223,13 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
+          <img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="logo-cropped" width="75"/>
+          <img src="https://i.ibb.co/KrZtqF1/Coronafirus-Logo.png" alt="coronalogo-cropped" width="300px"/>
           <Typography 
             variant = "h6"
             color = "inherit"
             align = "center"
             className = {classes.typography}>
-              Health Director Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -241,7 +252,7 @@ export default function PersistentDrawerLeft() {
           <List aria-label="Health Options">
             <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
             <ListItemLink to="/editdata" primary="Edit Data" icon={<AssignmentIcon />} setMenu={() => setWhichMenu("Edit Data")} />
-            <ListItemLink to="/viewmap" primary="View Map" setMenu={() => setWhichMenu("View Map")} />
+            <ListItemLink to="/viewmap" primary="View Map" icon = {<MapIcon />} setMenu={() => setWhichMenu("View Map")} />
           </List>
           <Divider />
           <List aria-label="Login Options">

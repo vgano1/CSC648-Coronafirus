@@ -33,7 +33,7 @@ function DataView({results, caGovApi, mode}) {
                     <div className="item griditem" key={index}>
                         <h2>{item.incident_name}</h2>
                         <p>Acres burned: {item.incident_acres_burned}</p>
-                        <p>Containment: {item.incident_acres_burned}</p>
+                        <p>Containment: {item.incident_containment}</p>
                         <p>Cooperating Agencies: {item.incident_cooperating_agencies}</p>
                     </div>
                 )
