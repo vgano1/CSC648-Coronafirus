@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   typography: {
-      flexGrow: 0.75,
+      flexGrow: 1,
   }
 }));
 

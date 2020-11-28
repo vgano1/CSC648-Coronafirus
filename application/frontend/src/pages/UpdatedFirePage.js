@@ -16,11 +16,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import FireAlertSubmit from '../components/fireAlertSubmit';
 import BasicTable from '../components/BasicTable';
+import FireAddEntry from '../components/FireComponent/fireAddEntry';
+import MapView from '../components/MapView';
 import { MemoryRouter } from 'react-router';
 import { Link as RouterLink, Redirect} from 'react-router-dom';
 import axios from 'axios';
@@ -88,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   typography: {
-      flexGrow: 0.75,
+      flexGrow: 1,
   }
 }));
 
@@ -172,6 +175,10 @@ export default function PersistentDrawerLeft() {
         return (<BasicTable result={result}></BasicTable>);
       case "Alerts":
         return (<FireAlertSubmit />);
+      case "Add Fire Entry": 
+        return (<FireAddEntry />);
+      case "View Map":
+        return (<MapView/>);
     }
   };
 
@@ -205,13 +212,13 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
+          
           <Typography 
             variant = "h6"
             color = "inherit"
             align = "center"
             className = {classes.typography}>
-              Fire Director Dashboard
+              <img src="https://i.ibb.co/YPCtv8h/coronalogo-cropped.png" alt="coronalogo-cropped" width="300px"/>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -234,6 +241,8 @@ export default function PersistentDrawerLeft() {
           <List aria-label="Fire Options">
             <ListItemLink to="/alerts" primary="Alerts" icon={<NotificationsIcon />} setMenu={() => setWhichMenu("Alerts")} />
             <ListItemLink to="/editdata" primary="Edit Data" icon={<AssignmentIcon />} setMenu={() => setWhichMenu("Edit Data")} />
+            <ListItemLink to="/addfireentry" primary="Add Fire Entry" icon={<PostAddIcon />} setMenu={() => setWhichMenu("Add Fire Entry")} />
+            <ListItemLink to="/viewMap" primary="View Map" icon={<PostAddIcon />} setMenu={() => setWhichMenu("View Map")} />
           </List>
           <Divider />
           <List aria-label="Login Options">

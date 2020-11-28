@@ -26,16 +26,19 @@ const BasicTable = (props) => {
     }));
 
   const [acres, setAcres] = React.useState(Array(props.result.length));
+  const [containment, setContainment] = React.useState(Array(props.result.length));
 
   useEffect(() => {
     let newAcres = acres;
+    let newContainment = containment;
     for (let i = 0; i < props.result.length; i++) {
-      console.log([props.result[i].incident_name, props.result[i].incident_acres_burned])
       newAcres[i] = [props.result[i].incident_name, props.result[i].incident_acres_burned];
     }
-    console.log(newAcres);
+    for (let i = 0; i < props.result.length; i++) {
+      newContainment[i] = [props.result[i].incident_name, props.result[i].incident_containment];
+    }
     setAcres(newAcres);
-    console.log(acres);
+    setContainment(newContainment);
   }, [])
 
   const useStyles = makeStyles({
@@ -56,7 +59,8 @@ const BasicTable = (props) => {
     axios.post('http://ec2-15-237-111-31.eu-west-3.compute.amazonaws.com:5000/update-fire/', {
       "did": myCounty.information['DID'],
       "acres": acres[i][1],
-      "fire_name": acres[i][0]
+      "fire_name": acres[i][0],
+      "containment": containment[i][1]
     })
     .then(function (response) {
       console.log(response);
@@ -73,6 +77,13 @@ const BasicTable = (props) => {
     console.log(acres);
   };
 
+  const handleChangeContainment = (event, i) => {
+    let newContainment = containment;
+    newContainment[i] = [props.result[i].incident_name, parseInt(event.target.value)];
+    setContainment(newContainment);
+    console.log(acres);
+  }
+
   const renderTable = () => {
     return props.result.map( (row, i) => {
             return (
@@ -80,12 +91,11 @@ const BasicTable = (props) => {
                 <TableCell component="th" scope="row">{row.incident_name}</TableCell>
                 <TableCell align="center">{row.incident_county}</TableCell>
                 <TableCell align="center">{row.incident_location}</TableCell>
-                <TextField required id="standard-required" label="Required" defaultValue={row.incident_acres_burned} onChange={(e) => handleChangeAcres(e, i)}/>
-                <TableCell align="center">{row.incident_containment}</TableCell>
+                <TableCell align="center"><TextField required id="standard-required" label="Required" defaultValue={row.incident_acres_burned} onChange={(e) => handleChangeAcres(e, i)}/></TableCell>
+                <TableCell align="center"><TextField required id="standard-required" label="Required" defaultValue={row.incident_containment} onChange={(e) => handleChangeContainment(e,i)}/></TableCell>
                 <TableCell align="center">{row.is_active}</TableCell>
                 <TableCell align="center">{row.incident_dateonly_created}</TableCell>
-                <TableCell align="center">{row.incident_dateonly_extinguished}</TableCell>
-                <Button variant="contained" onClick={() => updateData(i)}>Update</Button>
+                <TableCell align="center"><Button variant="contained" onClick={() => updateData(i)}>Update</Button></TableCell>
               </TableRow>
             )
     })
@@ -105,7 +115,6 @@ const BasicTable = (props) => {
             <TableCell align="center"><b>Containment&nbsp;</b></TableCell>
             <TableCell align="center"><b>Active&nbsp;</b></TableCell>
             <TableCell align="center"><b>Date Created&nbsp;</b></TableCell>
-            <TableCell align="center"><b>Date Extinguished&nbsp;</b></TableCell>
             <TableCell align="center"><b>Upload&nbsp;</b></TableCell>
           </TableRow>
         </TableHead>
