@@ -80,6 +80,8 @@ function MapPage() {
         });
       }  
   }
+  //<img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/> 
+  //<img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/>
   if(!redirect){
     return (
       <div>
@@ -89,7 +91,7 @@ function MapPage() {
               <div className="main-head foreground">
               {/* {userType === "Fire" && (<img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/>)}
               {userType === "Covid" && (<img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/>)} */}
-              {mode ? <img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/> : <img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/>}
+              {mode ? <a href ='http://coronafirus.team:3001/'> <img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/></a> : <a href ='http://coronafirus.team:3001/'><img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/></a>}
               <img src="https://i.ibb.co/KrZtqF1/Coronafirus-Logo.png" alt="logo-cropped" width="300px"/>
                 <Switch
                   className="rightSide"

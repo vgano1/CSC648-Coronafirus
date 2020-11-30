@@ -104,6 +104,12 @@ export default function SignIn() {
 
   return (
     <div>
+      <div className="main-head foreground">
+        <a href ='http://coronafirus.team:3001/'>
+          <img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/>
+          <img src="https://i.ibb.co/KrZtqF1/Coronafirus-Logo.png" alt="logo-cropped" width="300px"/>
+        </a>
+      </div>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>

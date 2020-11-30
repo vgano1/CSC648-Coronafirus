@@ -62,6 +62,7 @@ export default function SignUp() {
   const [email, setEmail] = React.useState('');
   const [redirect, setRedirect] = React.useState(false);
 
+
   const handleChangeCountie = (event) => {
     setCountie(event.target.value);
   };
@@ -97,6 +98,12 @@ export default function SignUp() {
 
   return (
     <div>
+      <div className="main-head foreground">
+        <a href ='http://coronafirus.team:3001/'>
+          <img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/>
+          <img src="https://i.ibb.co/KrZtqF1/Coronafirus-Logo.png" alt="logo-cropped" width="300px"/>
+        </a>
+      </div>
     {redirect === false ? (
       <Container component="main" maxWidth="xs">
       {/* <CssBaseline /> */}
