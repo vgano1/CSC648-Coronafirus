@@ -198,8 +198,8 @@ const FireAddEntry = () => {
           </div>
         </div>
         <Box mt={5}>
-        <Required />
-      </Box>
+          <Required />
+        </Box>
       {success && (<Alert severity="success">New fire added !</Alert>)}
       {failed && (<Alert severity="error">Error try again !</Alert>)}
       </Container>
