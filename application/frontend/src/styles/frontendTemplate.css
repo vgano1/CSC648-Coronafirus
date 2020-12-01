@@ -4,6 +4,7 @@ body .container {
   background: rgb(85,214,67);
   background: linear-gradient(170deg, #55d643 0%, rgba(42,143,235,1) 100%);
   z-index: 0;
+  height: 100vh;
 }
 
 body {
@@ -17,11 +18,11 @@ body {
 
 .background {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   z-index: 1;
   opacity: 1;
   transition: opacity .25s ease-in-out;
-  position: fixed;
+  position: absolute;
 
   background: rgb(176,82,246);
   background: linear-gradient(346deg, rgba(176,82,246,1) 0%, rgba(240,85,85,1) 100%);
@@ -36,7 +37,8 @@ body {
 }
 
 .rightSide {
-  float: right;
+  right: 1em !important;
+  position: absolute;
 }
 
 .signUp {
@@ -58,13 +60,33 @@ body {
       "footer footer footer";
     grid-template-rows: 80px 1fr 70px;  
     grid-template-columns: 30% 1fr 15%;
-    grid-row-gap: 30px;
+    grid-row-gap: 20px;
     grid-column-gap: 30px;
     height: 100vh;
 
     margin: 0;
+    }
+    
+  .wrapper2{
+    display: grid;
+    grid-template-areas: 
+      "header header header"
+      "side map map"
+      "footer footer footer";
+    grid-template-rows: 20px 1fr 70px;  
+    grid-template-columns: 30% 1fr 15%;
+    grid-row-gap: 0px;
+    grid-column-gap: 30px;
+    height: 90vh;
 
-    }  
+    margin: 0;
+  }  
+
+  .disclaimer {
+    height: 3vh;
+    background: rgb(42, 42, 42);
+    color: white;
+  }
  
   .main-head {
     grid-area: header;
@@ -75,17 +97,12 @@ body {
     justify-content: left;
     align-items: center;
 
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.5);
     }
-  .main-footer {
-    grid-area: footer;
-    bottom: 0;
-    position: absolute;
-    height: 6vh;
-    width: 100vw;
+  .main-header {
     background: rgb(42, 42, 42);
     color: white;
-    }
+    }  
   .map { 
     grid-area: map;
 
@@ -105,12 +122,15 @@ body {
       grid-template-areas: 
         "header"
         "map"
-        "side"
-        "footer";
+        "side";
       grid-template-rows: 80px 1fr 70px 1fr 70px;  
       grid-template-columns: 1fr;
 
       grid-row-gap: 0;
+   }
+
+   .disclaimer {
+     height: 1vh;
    }
    .main-head {
       font-size: 1em;
@@ -122,9 +142,5 @@ body {
     }
     .side {
       height: 40vh;
-    }
-    .main-footer {
-      height: 5vh;
-      
     }
   }
