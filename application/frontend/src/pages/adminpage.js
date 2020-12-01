@@ -172,7 +172,7 @@ export default function PersistentDrawerLeft() {
       case "Add Entry":
         return <AdminAddEntry></AdminAddEntry>;
       case "View Map":
-          return (<Redirect to = "/" />);
+          return (<MapPage></MapPage>);
     }
   };
 

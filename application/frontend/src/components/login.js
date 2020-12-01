@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInformation, setIsLoggedIn, setUserType } from '../redux/actions/userActions';
 import { useCookies } from "react-cookie";
@@ -35,6 +36,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="http://coronafirus.team:3001/">
+        SFSU Software Engineering Project CSC 648-848, Fall 2020. For Demonstration Only
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'. '}
+      <Link color="inherit" href = 'http://portfolioaboutpage-env.eba-qz5xmt46.eu-west-3.elasticbeanstalk.com/'>About Us</Link>
+    </Typography>
+  );
+}
 
 export default function SignIn() {
   const classes = useStyles();
@@ -158,6 +172,7 @@ export default function SignIn() {
           </div>
         </div>
         <Box mt={8}>
+          <Copyright />
         </Box>
       </Container>
     </div>
