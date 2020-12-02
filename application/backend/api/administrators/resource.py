@@ -364,7 +364,7 @@ class SendAlert(Resource):
         cur = db.connection.cursor()
         cur.execute(
             """
-            Select Al.message, Al.County
+            Select Al.message, Al.County, Al.alert_type
             from Alert Al
             where Al.alert_id = %s
             """, (alert_id,)
@@ -409,10 +409,14 @@ class SendAlert(Resource):
         print(alertID, aid, approve)
         self.confirmAlert(alertID, aid)
         print(alert)
-        if (approve == True):
+        if (approve.lower() == 'true'):
             emails = self.getUsersMailByCountie(alert[1])
             for elem in emails:
-                self.send_mail(elem[0], "Covid Alert", alert[0])
+                print(elem)
+                if (alert[2] == 'Health'):
+                    self.send_mail(elem[0], "Covid Alert", alert[0])
+                else:
+                    self.send_mail(elem[0], "Fire Alert", alert[0])
         return Response("OK", 200)
 
 # class SendMail(Resource):

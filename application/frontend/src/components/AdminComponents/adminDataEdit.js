@@ -96,6 +96,7 @@ const AdminDataEdit = () => {
             <TableRow key={i}>
               <TableCell component="th" scope="row" align="center">{row.fire_name}</TableCell>
               <TableCell align="center">{row.incident_acres_burned}</TableCell>
+              <TableCell align="center">{row.incident_containment}</TableCell>
               <TableCell align="center">{row.update_id}</TableCell>
               <TableCell align="center"><Button onClick={() => {approveFire(row.update_id, true)}} variant="contained" >Approve</Button></TableCell>
               <TableCell align="center"><Button onClick={() => {approveFire(row.update_id, false)}} variant="contained">Disapprove</Button></TableCell>
@@ -129,6 +130,7 @@ const AdminDataEdit = () => {
               <TableRow>
                 <TableCell align="center"><b>Fire Name</b></TableCell>
                 <TableCell align="center"><b>Incident Acres Burned</b></TableCell>
+                <TableCell align="center"><b>Incident Containment</b></TableCell>
                 <TableCell align="center"><b>Update ID&nbsp;</b></TableCell>
                 <TableCell align="center"><b>Approve&nbsp;</b></TableCell>
                 <TableCell align="center"><b>Deny&nbsp;</b></TableCell>
