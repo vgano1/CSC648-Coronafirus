@@ -22,7 +22,7 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import COVIDAlertSubmit from '../components/countyAlertSubmit';
 import BasicTableCovid from '../components/BasicTableCovid';
-import MapPage from '../pages/mapPage';
+import MapPage from '../pages/directormapPage';
 import { MemoryRouter } from 'react-router';
 import { Link as RouterLink} from 'react-router-dom';
 import axios from 'axios';
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
   drawer: {
-    width: drawerWidth,
+    width: 0,
     flexShrink: 0,
   },
   drawerPaper: {

@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 import FireAlertSubmit from '../components/fireAlertSubmit';
 import BasicTable from '../components/BasicTable';
 import FireAddEntry from '../components/FireComponent/fireAddEntry';
-import MapPage from '../pages/mapPage';
+import MapPage from '../pages/directormapPage';
 import { MemoryRouter } from 'react-router';
 import { Link as RouterLink, Redirect} from 'react-router-dom';
 import axios from 'axios';
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
   drawer: {
-    width: drawerWidth,
+    width: 0,
     flexShrink: 0,
   },
   drawerPaper: {

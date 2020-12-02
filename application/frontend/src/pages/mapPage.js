@@ -41,7 +41,7 @@ function MapPage() {
     const routeChange = () => {
       setRedirect(true);
     }
-  
+
     async function filterFunction(i) {
       var input;
       if(!i) {
@@ -80,34 +80,41 @@ function MapPage() {
         });
       }  
   }
+  //<img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/> 
+  //<img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/>
   if(!redirect){
     return (
       <div>
         <div className="container">
         <div className={mode ? 'background' : 'background fade'} />
           <div className="wrapper foreground">
-              <div className="main-head foreground">
-              {/* {userType === "Fire" && (<img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/>)}
-              {userType === "Covid" && (<img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/>)} */}
-              {mode ? <img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/> : <img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/>}
-              <img src="https://i.ibb.co/KrZtqF1/Coronafirus-Logo.png" alt="logo-cropped" width="300px"/>
-                <Switch
-                  className="rightSide"
-                  checked={mode}
-                  onChange={checkbox}
-                  name="checkedA"
-                  inputProps={{ 'aria-label': 'secondary checkbox' }}
-                />
-                {!isLoggedIn && <button className="signUp rightSide" onClick={routeChange}>Sign Up</button>}
-                {isLoggedIn && <button className="signUp rightSide" onClick={routeChange}>Dashboard</button>}
-              </div>
+              {!isLoggedIn && (<div className="main-head foreground">
+                {(mode ? 
+                  <a href ='http://coronafirus.team:3001/'>
+                   <img src="https://i.ibb.co/Vm9jgyg/Logo.png" alt="coronalogo-cropped" width="75px"/>
+                   <img src="https://i.ibb.co/KrZtqF1/Coronafirus-Logo.png" alt="logo-cropped" width="300px"/>
+                   </a> 
+                   : 
+                   <a href ='http://coronafirus.team:3001/'>
+                     <img src="https://i.ibb.co/D8bG90S/Logo-Green-v2.png" alt="coronalogo-cropped" width="75px"/>
+                     <img src="https://i.ibb.co/KrZtqF1/Coronafirus-Logo.png" alt="logo-cropped" width="300px"/>
+                  </a>)
+                }
+                  <button className="signUp rightSide" onClick={routeChange}>Sign Up</button>
+              </div>)}
               <div className="map foreground">
                   <MapView mapsSecret={Secret.GoogleMaps.ApiKey} selectedCounty={setSelected}/>
               </div>
               <div className="side foreground">
+                  <span>Click to switch  between COVID-19 and Wildfire:</span>
+                  <Switch
+                    style={{float: "right"}}
+                    checked={mode}
+                    onChange={checkbox}
+                    name="checkedA"
+                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  />
                   <DataView results={results} caGovApi={caGovApi} mode={mode}/>
-              </div>
-              <div className="main-footer foreground">SFSU Software Engineering Project CSC 648-848, Fall 2020. For Demonstration Only
               </div>
           </div>
         </div>
