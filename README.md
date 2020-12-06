@@ -1,4 +1,10 @@
-# csc648 Repository
+Disclaimer:
+
+This project was made to illustrate a Web-Based Application that was assigned to me and my groupmates. We are tasked to make a project that revolves around solving issues in regards to California's issue on California Wildfires as well as COVID-19 in California.
+
+This project is made for CSC648's Demonstration Purposes. No code may be used for redistribution and commercial uses. Please give proper credit to the respective owners of the repository.
+
+# CSC648 - Team 1 (Coronafirus)
 
 ## Please when ready add your teams application URL or IP to the repository description. This will help with grading. Teams are expected to keep this value up to date.
 
